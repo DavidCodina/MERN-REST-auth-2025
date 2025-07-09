@@ -1,0 +1,109 @@
+.rte-dropdown {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow:
+    0 12px 28px 0 rgba(0, 0, 0, 0.2),
+    0 2px 4px 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  display: flex; /* Was display: block; */
+  flex-direction: column;
+  gap: 4px;
+  min-height: 40px; /* ??? */
+  padding: 8px;
+  position: fixed;
+  z-index: 100; /* ??? */
+}
+
+.rte-dropdown .rte-item {
+  align-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 0;
+  border-radius: 8px;
+  color: #050505;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-size: 14px;
+  justify-content: space-between;
+  line-height: 1; /* line-height: 16px; */
+  max-width: 250px;
+  min-width: 100px;
+  padding: 5px;
+}
+
+.rte-dropdown .rte-item.rte-fontsize-item,
+.rte-dropdown .rte-item.rte-fontsize-item .rte-text {
+  min-width: unset;
+}
+/* 
+! Not sure what this does...
+*/
+.rte-dropdown .rte-item .active {
+  background-size: contain;
+  display: flex;
+  height: 20px;
+  width: 20px;
+}
+
+.rte-dropdown .rte-item:hover {
+  background-color: #eee;
+}
+
+.rte-dropdown .rte-item .rte-text {
+  display: flex;
+  line-height: 1.25;
+  flex-grow: 1;
+  min-width: 120px;
+}
+
+/* 
+! Removed .rte-dropdown .rte-item .icon,
+*/
+
+.rte-dropdown .rte-item [class^='rte-icon-'] {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  user-select: none;
+  margin-right: 12px;
+  line-height: 16px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 
+! .rte-dropdown .divider {
+!  width: auto;
+!  background-color: #eee;
+!  margin: 4px 8px;
+!  height: 1px;
+! } 
+*/
+
+/* 
+^ What does this do?
+*/
+
+@media screen and (max-width: 1100px) {
+  .rte-font-size-dropdown .rte-dropdown-button-text {
+    display: flex !important;
+  }
+
+  .rte-code-language .rte-dropdown-button-text {
+    display: flex !important;
+  }
+}
+
+/* Used in ToolbarPlugin.tsx */
+button.rte-item.rte-dropdown-item-active {
+  background-color: #eee;
+  box-shadow: inset 0 0 0 1px #ccc;
+}
+
+/* Used in ToolbarPlugin.tsx */
+button.rte-item.rte-dropdown-item-active i {
+  opacity: 1;
+}

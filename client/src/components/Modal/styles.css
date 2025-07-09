@@ -1,0 +1,498 @@
+/* ======================
+        keyframes
+====================== */
+
+@keyframes darkenBackground {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes lightenBackground {
+  0% {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes modalDown {
+  0% {
+    transform: translateY(-1200px) scale(0.85);
+  }
+  85% {
+    transform: translateY(0px) scale(0.85);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes modalUp {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    transform: translateY(0px) scale(0.85);
+  }
+  100% {
+    transform: translateY(-1200px) scale(0.85);
+  }
+}
+
+/* ======================
+        .xx-modal
+====================== */
+/*
+This controls the basic background color.
+--modalContentBackgroundColor: #fafafa;
+
+It's used in .xx-modal-content:
+background-color: var(--modalContentBackgroundColor);
+
+
+This controls the basic header and footer background color.
+--headerBackgroundColor: #fff;
+--footerBackgroundColor: #fff;
+
+
+This color is for the dividers
+  --headerFooterborderColor: rgba(0, 0, 0, 0.2)
+
+
+  None of the styles specifically indicate a text color to be used.
+*/
+
+.xx-modal {
+  /* If nothing else, it's important that the modal body have a
+  background-color of #fafafa so that input inset labels will blend. */
+  --modalContentBackgroundColor: #fafafa;
+  --headerBackgroundColor: #fff;
+  --footerBackgroundColor: #fff;
+  --borderRadius: 10px;
+  /* --contentBorderColor: rgba(0, 0, 0, 0.2); */
+  --headerFooterborderColor: rgba(0, 0, 0, 0.2); /* ??? */
+  --scrollbarColor: rgb(175, 175, 175); /* ??? */
+  --scrollbarHoverColor: var(--scrollbarColor); /* ??? */
+
+  background-color: transparent;
+  box-sizing: border-box;
+  /* Bootstrap uses display: none; to hide the modal. Instead
+  we use display: block & visibility:hidden to hide the modal. */
+  display: block;
+  /* This was height:100%. However, that assumes <html> and <body>
+  height are set correctly. It may be better to use 100vh. */
+  height: 100vh;
+  left: 0;
+  outline: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  visibility: hidden;
+  width: 100%;
+}
+
+.xx-modal.xx-modal-show {
+  visibility: visible;
+}
+
+/* ======================
+        animations
+====================== */
+/* The animation duration should correspond to the animationTime in Modal.tsx. */
+
+.xx-modal.xx-animate-open {
+  animation: darkenBackground 1s forwards;
+}
+
+.xx-modal.xx-animate-open .xx-modal-content {
+  animation: modalDown 1s;
+}
+
+.xx-modal.xx-animate-close {
+  animation: lightenBackground 1s forwards;
+}
+
+.xx-modal.xx-animate-close .xx-modal-content {
+  animation: modalUp 1s forwards;
+}
+
+/* ======================
+    .xx-modal-dialog 
+====================== */
+
+.xx-modal-dialog {
+  box-sizing: border-box;
+  margin: 8px;
+  pointer-events: none;
+  position: relative;
+  width: auto;
+}
+
+.xx-modal.xx-modal-show .xx-modal-dialog {
+  transform: none;
+}
+
+.xx-modal-dialog-scrollable {
+  height: calc(100% - 16px);
+}
+
+.xx-modal-dialog-scrollable .xx-modal-content {
+  max-height: 100%;
+
+  /* overflow: hidden was originally used by the Bootstrap CSS. This
+  could cause problems with components with dropdown menus. That said,
+  it doesn't seem to affect InputDateTime, SelectSingle, etc. Whether,
+  hidden or visible the menus just cause the modal to scroll,
+  or they will jump out of the container if scrollable={false} */
+  overflow: hidden;
+}
+
+.xx-modal-dialog-scrollable .xx-modal-body {
+  overflow-y: auto;
+}
+
+/* https://css-tricks.com/almanac/properties/s/scrollbar/ */
+.xx-modal-dialog-scrollable .xx-modal-body::-webkit-scrollbar {
+  /* color for the background of the scrollbar. */
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: none;
+  height: 7px;
+  width: 7px;
+  z-index: 9999;
+}
+
+.xx-modal-dialog-scrollable .xx-modal-body::-webkit-scrollbar-track {
+  display: none;
+}
+
+.xx-modal-dialog-scrollable .xx-modal-body::-webkit-scrollbar-track-piece {
+  background: transparent;
+  box-shadow: none;
+  background: none;
+}
+
+.xx-modal-dialog-scrollable .xx-modal-body::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarColor);
+  border-radius: 100px;
+  box-shadow: none;
+  height: 10px;
+}
+
+.xx-modal-dialog-scrollable .xx-modal-body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbarHoverColor);
+}
+
+.xx-modal-dialog-centered {
+  align-items: center;
+  display: flex;
+  min-height: calc(100% - 16px);
+}
+
+/* ======================
+    .xx-modal-content
+====================== */
+/* Gotcha: Whenever posible we want to use Tailwind classes in the component itself.
+Why? Because any style defined here will have precedence over the Tailwind styles. 
+As a first step toward a more Tailwind approach, I've removed:
+
+  background-color: var(--modalContentBackgroundColor);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+
+*/
+
+.xx-modal-content {
+  background-clip: padding-box;
+  border-radius: var(--borderRadius);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  outline: 0;
+  pointer-events: auto;
+  position: relative;
+  width: 100%;
+}
+
+/* The MainStem version does not use border, and instead uses box-shadow.
+  This gets around a weird space between border and content
+  https://stackoverflow.com/questions/59699082/border-causes-a-gap-in-between-border-and-content-when-zoomed-out
+  box-shadow: 0 0 0 1px <contentBorderColor> */
+
+/* ======================
+    .xx-modal-header
+====================== */
+
+.xx-modal-header {
+  align-items: center;
+  border-top-left-radius: calc(var(--borderRadius) - 1px);
+  border-top-right-radius: calc(var(--borderRadius) - 1px);
+  box-sizing: border-box;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  min-height: 50px;
+  padding: 15px 35px 15px 15px; /* was padding: 1rem 1rem; */
+  position: relative;
+  z-index: 1;
+}
+
+/* Attempt to standardize any elements passed into the header.
+This assumes that generally one will be passing in h1 - h1, or a
+div that contains h1 - h6. */
+.xx-modal-header * {
+  line-height: 1;
+  margin: 0;
+}
+
+/* ======================
+      .xx-modal-body
+====================== */
+
+.xx-modal-body {
+  /* Don't add a background-color here. It will break the
+  border-radius when not .xx-modal-dialog-scrollable.
+  Instead add it to .xx-modal-content */
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  padding: 16px;
+  position: relative;
+}
+
+/* ======================
+    .xx-modal-footer
+====================== */
+/* This implementation intentionally differs from Bootstrap. */
+
+.xx-modal-footer {
+  align-items: center;
+  border-bottom-left-radius: calc(var(--borderRadius) - 1px);
+  border-bottom-right-radius: calc(var(--borderRadius) - 1px);
+  box-sizing: border-box;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  min-height: 50px;
+  padding: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ======================
+      Media Queries
+====================== */
+
+@media (min-width: 576px) {
+  .xx-modal-dialog {
+    margin: 28px auto; /* Was margin: 1.75rem auto; */
+    max-width: 500px;
+  }
+
+  .xx-modal-dialog-scrollable {
+    height: calc(100% - 56px); /* Was height: calc(100% - 3.5rem); */
+  }
+
+  .xx-modal-dialog-centered {
+    min-height: calc(100% - 56px); /* Was min-height: calc(100% - 3.5rem); */
+  }
+
+  .xx-modal-sm {
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 992px) {
+  .xx-modal-lg,
+  .xx-modal-xl {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .xx-modal-xl {
+    max-width: 1140px;
+  }
+}
+
+.xx-modal-fullscreen {
+  height: 100%;
+  margin: 0;
+  max-width: none;
+  width: 100vw;
+}
+
+.xx-modal-fullscreen .xx-modal-content {
+  border: 0;
+  border-radius: 0;
+  height: 100%;
+}
+
+.xx-modal-fullscreen .xx-modal-header {
+  border-radius: 0;
+}
+
+.xx-modal-fullscreen .xx-modal-body {
+  overflow-y: auto;
+}
+
+.xx-modal-fullscreen .xx-modal-footer {
+  border-radius: 0;
+}
+
+@media (max-width: 575.98px) {
+  .xx-modal-fullscreen-sm-down {
+    height: 100%;
+    margin: 0;
+    max-width: none;
+    width: 100vw;
+  }
+
+  .xx-modal-fullscreen-sm-down .xx-modal-content {
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .xx-modal-fullscreen-sm-down .xx-modal-header {
+    border-radius: 0;
+  }
+
+  .xx-modal-fullscreen-sm-down .xx-modal-body {
+    overflow-y: auto;
+  }
+
+  .xx-modal-fullscreen-sm-down .xx-modal-footer {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .xx-modal-fullscreen-md-down {
+    height: 100%;
+    margin: 0;
+    max-width: none;
+    width: 100vw;
+  }
+
+  .xx-modal-fullscreen-md-down .xx-modal-content {
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .xx-modal-fullscreen-md-down .xx-modal-header {
+    border-radius: 0;
+  }
+
+  .xx-modal-fullscreen-md-down .xx-modal-body {
+    overflow-y: auto;
+  }
+
+  .xx-modal-fullscreen-md-down .xx-modal-footer {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .xx-modal-fullscreen-lg-down {
+    height: 100%;
+    margin: 0;
+    max-width: none;
+    width: 100vw;
+  }
+
+  .xx-modal-fullscreen-lg-down .xx-modal-content {
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .xx-modal-fullscreen-lg-down .xx-modal-header {
+    border-radius: 0;
+  }
+
+  .xx-modal-fullscreen-lg-down .xx-modal-body {
+    overflow-y: auto;
+  }
+
+  .xx-modal-fullscreen-lg-down .xx-modal-footer {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .xx-modal-fullscreen-xl-down {
+    height: 100%;
+    margin: 0;
+    max-width: none;
+    width: 100vw;
+  }
+
+  .xx-modal-fullscreen-xl-down .xx-modal-content {
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .xx-modal-fullscreen-xl-down .xx-modal-header {
+    border-radius: 0;
+  }
+
+  .xx-modal-fullscreen-xl-down .xx-modal-body {
+    overflow-y: auto;
+  }
+
+  .xx-modal-fullscreen-xl-down .xx-modal-footer {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 1399.98px) {
+  .xx-modal-fullscreen-xxl-down {
+    height: 100%;
+    margin: 0;
+    max-width: none;
+    width: 100vw;
+  }
+
+  .xx-modal-fullscreen-xxl-down .xx-modal-content {
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .xx-modal-fullscreen-xxl-down .xx-modal-header {
+    border-radius: 0;
+  }
+
+  .xx-modal-fullscreen-xxl-down .xx-modal-body {
+    overflow-y: auto;
+  }
+
+  .xx-modal-fullscreen-xxl-down .xx-modal-footer {
+    border-radius: 0;
+  }
+}
+
+/* ======================
+        Utilities
+====================== */
+
+.xx-modal.xx-animation-none,
+.xx-modal .xx-animation-none {
+  animation: none !important;
+}
+
+.xx-modal.xx-animation-duration-0,
+.xx-modal .xx-animation-duration-0 {
+  animation-duration: 0s !important;
+}

@@ -1,0 +1,136 @@
+.xx-tooltip-container {
+  --tooltipBackground: #fff;
+  --tooltipBorder: #a3a3a3; /* neutral-400 */
+  background-color: var(--tooltipBackground);
+  border-color: var(--tooltipBorder);
+}
+
+.xx-tooltip-container[data-popper-interactive='false'] {
+  pointer-events: none;
+}
+
+.xx-tooltip-arrow {
+  height: 1rem;
+  position: absolute;
+  width: 1rem;
+  pointer-events: none;
+}
+
+.xx-tooltip-arrow::before {
+  border-style: solid;
+  content: '';
+  display: block;
+  height: 0;
+  margin: auto;
+  width: 0;
+}
+
+.xx-tooltip-arrow::after {
+  border-style: solid;
+  content: '';
+  display: block;
+  height: 0;
+  margin: auto;
+  position: absolute;
+  width: 0;
+}
+
+/* https://www.npmjs.com/package/react-popper-tooltip
+"While the tooltip is being displayed, you have access to some attributes 
+on the tooltip container. You can use them in your CSS in specific scenarios."
+
+  data-popper-placement: contains the current tooltip placement. 
+  You can use it to properly offset and display the arrow element 
+  (e.g., if the tooltip is displayed on the right, the arrow should point 
+  to the left and vice versa).
+
+  data-popper-reference-hidden: set to true when the trigger element is fully 
+  clipped and hidden from view, which causes the tooltip to appear to be attached 
+  to nothing. Set to false otherwise.
+
+  data-popper-escaped: set to true when the tooltip escapes the trigger element's boundary 
+  (and so it appears detached). Set to false otherwise.
+
+  data-popper-interactive: contains the current interactive option value.
+
+*/
+
+.xx-tooltip-container[data-popper-placement*='bottom'] .xx-tooltip-arrow {
+  left: 0;
+  margin-top: -0.4rem;
+  top: 0;
+}
+
+.xx-tooltip-container[data-popper-placement*='bottom']
+  .xx-tooltip-arrow::before {
+  border-color: transparent transparent var(--tooltipBorder) transparent;
+  border-width: 0 0.5rem 0.4rem 0.5rem;
+  position: absolute;
+  top: 0px; /* Was -1px before fix. */
+}
+
+.xx-tooltip-container[data-popper-placement*='bottom']
+  .xx-tooltip-arrow::after {
+  border-color: transparent transparent var(--tooltipBackground) transparent;
+  border-width: 0 0.5rem 0.4rem 0.5rem;
+  top: 1px; /* Added */
+  filter: drop-shadow(0px -1.5px 1px rgba(0, 0, 0, 0.2)); /* Added */
+}
+
+.xx-tooltip-container[data-popper-placement*='top'] .xx-tooltip-arrow {
+  bottom: 0;
+  left: 0;
+  margin-bottom: -1rem;
+}
+
+.xx-tooltip-container[data-popper-placement*='top'] .xx-tooltip-arrow::before {
+  border-color: var(--tooltipBorder) transparent transparent transparent;
+  border-width: 0.4rem 0.5rem 0 0.5rem;
+  position: absolute;
+  top: 0px; /* Was 1px before fix. */
+}
+
+.xx-tooltip-container[data-popper-placement*='top'] .xx-tooltip-arrow::after {
+  border-color: var(--tooltipBackground) transparent transparent transparent;
+  border-width: 0.4rem 0.5rem 0 0.5rem;
+  top: -1px; /* Added for fix */
+
+  filter: drop-shadow(0px 1.5px 1px rgba(0, 0, 0, 0.2)); /* Added */
+}
+
+.xx-tooltip-container[data-popper-placement*='right'] .xx-tooltip-arrow {
+  left: 0;
+  margin-left: -0.7rem;
+}
+
+.xx-tooltip-container[data-popper-placement*='right']
+  .xx-tooltip-arrow::before {
+  border-color: transparent var(--tooltipBorder) transparent transparent;
+  border-width: 0.5rem 0.4rem 0.5rem 0;
+}
+
+.xx-tooltip-container[data-popper-placement*='right'] .xx-tooltip-arrow::after {
+  border-color: transparent var(--tooltipBackground) transparent transparent;
+  border-width: 0.5rem 0.4rem 0.5rem 0;
+  left: 6px;
+  top: 0;
+  filter: drop-shadow(-1.5px 0px 1px rgba(0, 0, 0, 0.2)); /* Added */
+}
+
+.xx-tooltip-container[data-popper-placement*='left'] .xx-tooltip-arrow {
+  margin-right: -0.7rem;
+  right: 0;
+}
+
+.xx-tooltip-container[data-popper-placement*='left'] .xx-tooltip-arrow::before {
+  border-color: transparent transparent transparent var(--tooltipBorder);
+  border-width: 0.5rem 0 0.5rem 0.4rem;
+}
+
+.xx-tooltip-container[data-popper-placement*='left'] .xx-tooltip-arrow::after {
+  border-color: transparent transparent transparent var(--tooltipBackground);
+  border-width: 0.5rem 0 0.5rem 0.4rem;
+  left: 4px;
+  top: 0;
+  filter: drop-shadow(1.5px 0px 1px rgba(0, 0, 0, 0.2)); /* Added */
+}

@@ -1,0 +1,29 @@
+.rte-draggable-block-menu {
+  border-radius: 4px;
+  cursor: grab;
+  left: 0;
+  padding: 2px 1px;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  will-change: transform;
+}
+
+.rte-draggable-block-menu:active {
+  cursor: grabbing;
+}
+
+.rte-draggable-block-menu:hover {
+  background-color: #efefef;
+}
+
+.rte-draggable-block-target-line {
+  background: #0ea5e9; /* Takilwind Sky 500 */
+  height: 1.5px;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  will-change: transform;
+}

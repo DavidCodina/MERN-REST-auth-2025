@@ -1,0 +1,301 @@
+{
+  "globals": {
+    // Error: "module is not defined"
+    // Solution: set "module": true here.
+    // Or better yet, set env.node: true below.
+    // "module": true
+  },
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2022": true
+    // "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {},
+
+  "extends": [
+    // The @eslint/js : "plugin:@eslint/js/recommended" replaces "eslint:recommended"
+    // once we update to eslint version 9. For now, stick with "eslint:recommended".
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:storybook/recommended",
+    "plugin:@lexical/recommended",
+    "prettier"
+  ],
+
+  "ignorePatterns": ["dist", ".eslintrc.cjs", ".eslintrc.json"],
+
+  "plugins": [
+    "@typescript-eslint",
+    "vitest",
+    // https://react.dev/learn/react-compiler#installing-eslint-plugin-react-compiler
+    // "eslint-plugin-react-compiler",
+    "jsx-a11y",
+    "testing-library",
+    "jest-dom",
+    // "react-refresh",
+    "promise",
+    "prettier"
+  ],
+
+  "rules": {
+    // "react-compiler/react-compiler": "warn",
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Vite comes with eslint-plugin-react-refresh baked in.
+    // However, this plugin gets in the way of syntax like
+    // export * from './loader', which occurs in a lot of
+    // component pages. For this reason, I've disabled it.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    // "react-refresh/only-export-components": [ "warn", { "allowConstantExport": true }],
+    "prettier/prettier": "warn",
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Gotcha!
+    // https://github.com/eslint/eslint/blob/main/packages/js/src/configs/eslint-recommended.js
+    // This can also be found in node_modules/@eslint/js/src/configs/eslint-recommended.js
+    //
+    // Visit the ESLint Rules Reference page: https://eslint.org/docs/latest/rules/
+    // Look for rules marked with a checkmark (✓) in the "Recommended" column.
+    // These are the rules included in "eslint:recommended".
+    // And actually, it turns out that this is NOT one of them.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "guard-for-in": "warn",
+    "require-await": "off",
+
+    "vitest/expect-expect": "warn",
+    "testing-library/no-debugging-utils": "off",
+    "no-var": "warn", // Warns user to implement let or const instead.
+    "prefer-const": "warn", // Warns user to implement const over let.
+
+    "no-throw-literal": "warn", // Warns user to use an Error object
+    "no-unreachable": "warn", // Warns user when code is unreachable due to return, throw, etc.
+    "import/no-anonymous-default-export": "off",
+    "no-eq-null": "warn", // Warns user to implement strict equality.
+    "react/no-unescaped-entities": "off", // Allow apostrophes in text...
+    "no-prototype-builtins": "off",
+
+    "@typescript-eslint/ban-ts-comment": "off", // Allows ignore statement
+
+    "@typescript-eslint/no-empty-object-type": "off", // Allows type Props = {}
+
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_", // Ignore unused arguments that start with _
+        "varsIgnorePattern": "^_", // Ignore unused variables that start with _
+        "caughtErrorsIgnorePattern": "^_", // Ignore caught errors that start with _
+        "destructuredArrayIgnorePattern": "^_" // Ignore destructured array elements that start with _
+      }
+    ],
+
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // This rule requires parserServices to be generated.
+    // i.e.,  "parserOptions": { "project": "./tsconfig.json" },
+    // That said, I prefer not to just for this rule. Why?
+    // Because then you have to be explicit in tsconfig.json about your include array:
+    //
+    //   "include": ["src/**/*", "tw-plugins/**/*", ".storybook/**/*", "vite.config.ts"] // NOT just ["src"]
+    //
+    // Being explicit is actually good, and I am doing that, but it's also a gotcha if you don't do it.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    // "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+
+    "promise/always-return": "warn",
+    "promise/no-return-wrap": "warn",
+    "promise/param-names": "warn",
+    "promise/catch-or-return": ["warn", { "allowFinally": true }],
+    "promise/no-native": "off",
+    "promise/no-nesting": "warn",
+    "promise/no-promise-in-callback": "warn",
+    "promise/no-callback-in-promise": "warn",
+    "promise/avoid-new": "off",
+    "promise/no-new-statics": "warn",
+    "promise/no-return-in-finally": "warn",
+    "promise/valid-params": "warn",
+
+    "jest/no-disabled-tests": "off",
+    "jest/no-commented-out-tests": "off"
+
+    /* ========================================================================
+    Changes specifically related to "plugin:@typescript-eslint/recommended-type-checked"
+    ===========================================================================
+
+    "@typescript-eslint/no-unsafe-argument": "off", // Same as: ["error", { "allow": ["any"] }]
+    // This rule is too aggressive as it can originate with code that you don't directly control,
+    // when consuming that code. For example in Tailwind plugins: const { addBase } = pluginApi
+    "@typescript-eslint/unbound-method": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Similar to "@typescript-eslint/unbound-method", "@typescript-eslint/no-unsafe-assignment" may
+    // originate from code that you don't directly control. Essentially, it works like this:
+    //
+    //   const value1: any = null
+    //   const value2 = value2  // => ❌
+    //
+    // Thus in my Tailwind colorVarsPlugin.ts
+    // I do this:
+    //
+    //   const colors = theme('colors')
+    //   const value = colors[colorKey]
+    //
+    // theme() is from Tailwind and it is loosely typed.
+    // However, this makes value implicitly any, which this rule doesn't like.
+    // We can get around this with typecasting:  const value = colors[colorKey] as string | Record<any, any>
+    // But it's just easier to turn it off.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "@typescript-eslint/no-unsafe-assignment": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // "@typescript-eslint/no-unsafe-return" is a little too aggressive for me.
+    //
+    // const returnAny = () => {
+    //   const value: any = {}
+    //   return value // => ❌
+    // }
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "@typescript-eslint/no-unsafe-return": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // "@typescript-eslint/no-unsafe-call" is too aggresive and can
+    // originate from third-party code.
+    //
+    //   const value: any = 'abc123'
+    //   const sub = value.substring(1) // => ❌
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "@typescript-eslint/no-unsafe-call": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // At first glance, "@typescript-eslint/restrict-template-expressions" seems
+    // like it would be a good rule to enforce.
+    //
+    //   const arg: string[] | string = ['Hello']
+    //   const value = `${arg}`  // => ❌
+    //
+    //   const value: unknown = 'abc123'
+    //   const string = `${value}` // => ❌
+    //
+    // However, I still find it to be a bit heavy-handed. For example,
+    // in a Tailwind plugin it flags this: `${theme('colors.stone.100')})`
+    // Again, the problem originates in third-party code. Yes, we can go
+    // and typecast all value when being consumed, but for now I'm
+    // turning it off.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    "@typescript-eslint/restrict-template-expressions": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // "@typescript-eslint/no-unsafe-member-access" : This rule will will flag
+    // object access even when the object is typed as any.
+    //
+    //   const error: any = {name: "David"}
+    //   const name = error.name  // => ❌
+    //
+    // If something is typed as any, I want it to be treated as any!
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "@typescript-eslint/no-unsafe-member-access": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // "@typescript-eslint/no-floating-promises" : This is actually a useful rule.
+    // It can prevent you from forgetting to await a Promise. On the other hand,
+    // it can also get in the way when running functions that DO NOT actually
+    // need to be awaited.
+    //
+    //
+    // useEffect(() => {
+    //   if (autoInvoke) {
+    //     refetch()  // => ❌
+    //   }
+    //   return () => {
+    //     if (controller.current) {
+    //       controller.current.abort()
+    //     }
+    //   }
+    // }, [refetch, autoInvoke])
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "@typescript-eslint/no-floating-promises": "off",
+
+    // A rule I actually like a lot!
+    "@typescript-eslint/require-await": "warn",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // "@typescript-eslint/no-misused-promises"
+    //
+    //  <button
+    //    onClick={async () => {}}  // => ❌
+    //  >Click Me</button>
+    //
+    // This kind of error was showing up a lot when implementing react-hook-form
+    // for form submission:
+    //
+    //   onClick={handleSubmit(onSubmit, onError)}
+    //
+    // It's too aggressive.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "@typescript-eslint/no-misused-promises": "off",
+
+    "@typescript-eslint/no-base-to-string": "off"
+
+    */
+  },
+
+  // This is probably no longer necessary since SB v7 now more or less
+  // requires you to follow the standard file naming conventions.
+  "overrides": [
+    {
+      "files": ["**/*.stories.*", "**/story.*"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    },
+    {
+      "files": [
+        "*.stories.@(ts|tsx|js|jsx|mjs|cjs)",
+        "*.story.@(ts|tsx|js|jsx|mjs|cjs)",
+        "story.@(js|jsx|ts|tsx)"
+      ],
+      "rules": {
+        "import/no-anonymous-default-export": "off",
+        "storybook/await-interactions": "error",
+        "storybook/context-in-play-function": "error",
+        "storybook/default-exports": "error",
+        "storybook/hierarchy-separator": "warn",
+        "storybook/no-redundant-story-name": "warn",
+        "storybook/prefer-pascal-case": "warn",
+        "storybook/story-exports": "error",
+        "storybook/use-storybook-expect": "error",
+        "storybook/use-storybook-testing-library": "error"
+      }
+    }
+  ]
+}

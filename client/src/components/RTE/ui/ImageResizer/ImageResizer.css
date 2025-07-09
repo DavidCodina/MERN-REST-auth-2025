@@ -1,0 +1,56 @@
+.rte-editor-shell .rte-editor-image .rte-image-resizer {
+  background-color: rgb(60, 132, 244);
+  border: 1px solid #fff;
+  display: block;
+  height: 7px;
+  position: absolute;
+  width: 7px;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.image-resizer-n {
+  cursor: n-resize;
+  left: 48%;
+  top: -6px;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.rte-image-resizer-ne {
+  cursor: ne-resize;
+  right: -6px;
+  top: -6px;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.rte-image-resizer-e {
+  bottom: 48%;
+  cursor: e-resize;
+  right: -6px;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.rte-image-resizer-se {
+  bottom: -2px;
+  cursor: nwse-resize;
+  right: -6px;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.rte-image-resizer-s {
+  bottom: -2px;
+  cursor: s-resize;
+  left: 48%;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.rte-image-resizer-sw {
+  bottom: -2px;
+  cursor: sw-resize;
+  left: -6px;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.rte-image-resizer-w {
+  bottom: 48%;
+  cursor: w-resize;
+  left: -6px;
+}
+
+.rte-editor-shell .rte-editor-image .rte-image-resizer.rte-image-resizer-nw {
+  cursor: nw-resize;
+  left: -6px;
+  top: -6px;
+}

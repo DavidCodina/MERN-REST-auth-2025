@@ -1,0 +1,85 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "vitest",
+    // "eslint-plugin-tsdoc",
+    "promise",
+    "prettier"
+  ],
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+
+  "rules": {
+    // "tsdoc/syntax": "warn",
+    "prettier/prettier": "warn",
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off",
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Gotcha!
+    // https://github.com/eslint/eslint/blob/main/packages/js/src/configs/eslint-recommended.js
+    // This can also be found in node_modules/@eslint/js/src/configs/eslint-recommended.js
+    //
+    // Visit the ESLint Rules Reference page: https://eslint.org/docs/latest/rules/
+    // Look for rules marked with a checkmark (✓) in the "Recommended" column.
+    // These are the rules included in "eslint:recommended".
+    // And actually, it turns out that this is NOT one of them.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "guard-for-in": "warn",
+    "require-await": "off", // I did like this initially, but it there are actually cases where I need to still use await.
+    "vitest/expect-expect": "warn",
+    "prefer-const": "warn",
+    "no-var": "warn",
+    "no-throw-literal": "off",
+
+    "no-undef": "off",
+    "no-unreachable": "warn",
+    "import/no-anonymous-default-export": "off",
+    "no-eq-null": "warn",
+    "react/no-unescaped-entities": "off",
+    "no-prototype-builtins": "off",
+    "@typescript-eslint/ban-ts-comment": "off", // Allows ignore statement
+
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_", // Ignore unused arguments that start with _
+        "varsIgnorePattern": "^_", // Ignore unused variables that start with _
+        "caughtErrorsIgnorePattern": "^_", // Ignore caught errors that start with _
+        "destructuredArrayIgnorePattern": "^_" // Ignore destructured array elements that start with _
+      }
+    ],
+
+    "@typescript-eslint/no-empty-object-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+
+    "promise/always-return": "warn",
+    "promise/no-return-wrap": "warn",
+    "promise/param-names": "warn",
+    "promise/catch-or-return": ["warn", { "allowFinally": true }],
+    "promise/no-native": "off",
+    "promise/no-nesting": "warn",
+    "promise/no-promise-in-callback": "warn",
+    "promise/no-callback-in-promise": "warn",
+    "promise/avoid-new": "off",
+    "promise/no-new-statics": "warn",
+    "promise/no-return-in-finally": "warn",
+    "promise/valid-params": "warn"
+  }
+}

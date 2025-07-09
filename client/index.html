@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- "transition-none-all" is removed on mount from within ThemeContext.tsx -->
+<html lang="en" class="transition-none-all">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 
+
+      Rather than doing this, we can import 'material-symbols' into main.tsx
+      https://fonts.google.com/icons
+      https://developers.google.com/fonts/docs/material_symbols 
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+
+    -->
+    <title>Demo</title>
+  </head>
+  <body>
+    <!-- 
+      We might want to change the id here, so any styling done on it 
+      doesn't conflict with Storybook's root.
+    -->
+    <div id="root"></div>
+    <div id="modal-root"></div>
+
+    <script>
+      // https://docs.amplify.aws/lib/project-setup/create-application/q/platform/js/#vue-vite-config
+      // See the vite.config.ts for the other part of the solution.
+      window.global = window
+      var exports = {}
+    </script>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

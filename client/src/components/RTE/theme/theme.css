@@ -1,0 +1,371 @@
+.editor-theme-indent {
+  --lexical-indent-base-value: 40px !important;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-hr {
+  padding: 0.5px 0px;
+  border: none;
+  margin: 25px auto;
+  max-width: 95%;
+  color: #ccc;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.editor-theme-hr.selected {
+  outline: 2px solid rgb(60, 132, 244); /* ??? */
+  user-select: none;
+}
+
+/* ======================
+
+====================== */
+
+/* Obviously, this is dependent on the block types continuing to have theme names of editor-theme- */
+[class^='editor-theme-'] img {
+  display: inline;
+  max-width: 100% !important;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-paragraph {
+  position: relative;
+  line-height: 1.5;
+}
+
+/* This allows larger child elements to be vertically centered, which just looks better. */
+.editor-theme-paragraph > * {
+  vertical-align: middle;
+}
+
+/* ======================
+  Clearfix for p, h1-h6
+====================== */
+/* This allows floated images to clear their parent containers.
+It's not necessary for images inside of the editor, but it is necessary
+when the elements are rendered outside of the editor. */
+
+.editor-theme-paragraph:not(.rte-editor-shell *)::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.editor-theme-h1:not(.rte-editor-shell *)::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.editor-theme-h2:not(.rte-editor-shell *)::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.editor-theme-h3:not(.rte-editor-shell *)::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.editor-theme-h4:not(.rte-editor-shell *)::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.editor-theme-h5:not(.rte-editor-shell *)::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.editor-theme-h6:not(.rte-editor-shell *)::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-quote {
+  border-left: 4px solid #d4d4d4; /* Tailwind Neutral 300 */
+  display: block;
+  margin: 0px 40px 16px 40px;
+  padding-left: 8px;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-indent {
+  --lexical-indent-base-value: 40px;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-textBold {
+  font-weight: bold;
+}
+
+.editor-theme-textCode {
+  background-color: rgb(240, 242, 245);
+  padding: 1px 0.25rem;
+  font-family: Menlo, Consolas, Monaco, monospace;
+  font-size: 94%;
+}
+
+.editor-theme-textItalic {
+  font-style: italic;
+}
+
+.editor-theme-textStrikethrough {
+  text-decoration: line-through;
+}
+
+.editor-theme-textSubscript {
+  font-size: 0.8em;
+  vertical-align: sub !important;
+}
+
+.editor-theme-textSuperscript {
+  font-size: 0.8em;
+  vertical-align: super;
+}
+
+.editor-theme-textUnderline {
+  text-decoration: underline;
+}
+
+.editor-theme-textUnderlineStrikethrough {
+  text-decoration: underline line-through;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-link {
+  color: rgb(33, 111, 219);
+  text-decoration: none;
+}
+.editor-theme-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-code {
+  background-color: rgb(240, 240, 240);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* color: #333;  Will default to code color without this.*/
+  display: block;
+  font-family: Menlo, Consolas, Monaco, monospace;
+  font-size: 13px;
+  line-height: 1.53;
+
+  margin: 0px 0px 16px 0px;
+  overflow-x: auto;
+  padding: 8px 8px 8px 44px;
+  position: relative;
+  tab-size: 2;
+  /* white-space: nowrap; was causing problems with the way the lines worked.
+  Using pre prevents wrapping, but without the issues. */
+  white-space: pre;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.editor-theme-code::-webkit-scrollbar {
+  display: none;
+}
+
+.editor-theme-code:before {
+  content: attr(data-gutter);
+  position: absolute;
+  background-color: #eee;
+  left: 0;
+  top: 0;
+  border-right: 1px solid #ccc;
+  padding: 8px 12px;
+  color: #777;
+  white-space: pre-wrap;
+  text-align: right;
+  min-width: 25px;
+}
+
+/* For some reason all of the <code> > <span> tags in the output HTML have 
+white-space: pre-wrap programmatically added to them. It's not uncommon to 
+find unintuitive DOM output from Lexical that you then have to fight to fix.
+One way to overwrite the current issue is as follows: */
+.editor-theme-code:not(.rte-editor-shell *) * {
+  white-space: pre !important;
+}
+
+/* The editor will insert a <br/> into the code block type as filler.
+However, that is not included when the value is passed out as an HTML string.
+To emulate that space we can do this: */
+.editor-theme-code:not(.rte-editor-shell *):after {
+  content: '\A';
+  white-space: pre;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-ol {
+  list-style-position: inside;
+  list-style-type: decimal;
+  margin: 0px 40px 16px 40px;
+  padding: 0;
+}
+
+.editor-theme-ul {
+  list-style-position: inside;
+  list-style-type: disc;
+  margin: 0px 40px 16px 40px;
+  padding: 0;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-listItemChecked,
+.editor-theme-listItemUnchecked {
+  position: relative;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 24px;
+  padding-right: 24px;
+  list-style-type: none;
+  outline: none;
+}
+
+.editor-theme-listItemChecked {
+  text-decoration: line-through;
+  /* text-decoration-color: #ef4444; */
+  text-decoration-thickness: 2px;
+}
+
+.editor-theme-listItemUnchecked:before,
+.editor-theme-listItemChecked:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  top: 2px;
+  left: 0;
+  cursor: pointer;
+  display: block;
+  background-size: cover;
+  position: absolute;
+}
+
+.editor-theme-listItemUnchecked[dir='rtl']:before,
+.editor-theme-listItemChecked[dir='rtl']:before {
+  left: auto;
+  right: 0;
+}
+
+.editor-theme-listItemUnchecked:focus:before,
+.editor-theme-listItemChecked:focus:before {
+  box-shadow: 0 0 0 2px #a6cdfe;
+  border-radius: 2px;
+}
+
+.editor-theme-listItemUnchecked:before {
+  border: 1px solid #999;
+  border-radius: 2px;
+}
+
+/* This is the checked background, border, border-radius. */
+.editor-theme-listItemChecked:before {
+  border: 1px solid rgb(61, 135, 245);
+  border-radius: 2px;
+  background-color: #3d87f5;
+  background-repeat: no-repeat;
+}
+
+/* This is the actual check style. The checkbox has a height and width of 16px. */
+.editor-theme-listItemChecked:after {
+  content: '';
+  cursor: pointer;
+  border-color: #fff;
+  border-style: solid;
+  position: absolute;
+  display: block;
+  top: 5.5px;
+  left: 6.5px;
+  width: 4px;
+  height: 8px;
+  transform: rotate(45deg);
+  border-width: 0 2px 2px 0;
+}
+
+/* ======================
+
+====================== */
+/* Works in conjunction with CodeHightlightPlugin. */
+
+.editor-theme-tokenComment {
+  color: slategray;
+}
+.editor-theme-tokenPunctuation {
+  color: #999;
+}
+
+.editor-theme-tokenProperty {
+  color: #905;
+}
+.editor-theme-tokenSelector {
+  color: #690;
+}
+.editor-theme-tokenOperator {
+  color: #9a6e3a;
+}
+.editor-theme-tokenAttr {
+  color: #07a;
+}
+.editor-theme-tokenVariable {
+  color: #e90;
+}
+.editor-theme-tokenFunction {
+  color: #dd4a68;
+}
+
+/* ======================
+
+====================== */
+
+.editor-theme-embedBlock {
+  user-select: none;
+}
+
+/* This is important because Tailwind may convert it to block.
+However, in order for the parent to center it with text-align:center,
+it has to be inline (or possibly inline-block. */
+.editor-theme-embedBlock iframe {
+  display: inline;
+}
+
+.editor-theme-embedBlockFocus {
+  outline: 2px solid rgb(60, 132, 244); /* ??? */
+}

@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    // This change allows TypeScript to import JSON files as modules.
+    "resolveJsonModule": true,
+    "types": ["vitest/globals", "vitest/importMeta"],
+    "target": "ESNext",
+    "baseUrl": "src",
+    // "rootDir": "src",
+    "paths": {
+      "models/*": ["models/*"],
+      "views/*": ["views/*"],
+      "controllers/*": ["controllers/*"],
+      "middleware/*": ["middleware/*"],
+      "functions/*": ["functions/*"],
+      "utils/*": ["utils/*"],
+      "config/*": ["config/*"],
+      "public/*": ["public/*"],
+      "routes/*": ["routes/*"],
+      "package.json": ["../package.json"]
+    },
+    "strict": true,
+    // This needs to be omitted or false for this rule to work in eslintrc.json:
+    // "@typescript-eslint/no-unused-vars": [ "warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "noUnusedLocals": false,
+    "allowJs": true,
+
+    // Report errors in .js files.
+    "checkJs": false,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+
+    // The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'.
+    // This was this "module": "CommonJS",
+    "module": "ES2020",
+    "moduleResolution": "node", //^ It might be better us use 'bundler'
+    // "module": "ESNext",
+
+    // See Mike North intermediate typescript for why you might not want to do this.
+    // This may be needed for imports like import fs from 'fs' when module and
+    // moduleResolution are not using "NodeNext". However, for now it seems to
+    // be okay to omit it.
+    "esModuleInterop": true,
+
+    // Probably better just to omit this all together.
+    // By default all visible ”@types” packages are included in your compilation.
+    // Packages in node_modules/@types of any enclosing folder are considered visible.
+    // For example, that means packages within ./node_modules/@types/, ../node_modules/@types/, ../../node_modules/@types/, and so on.
+    // "types": ["node", "jest", "express"],
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    ".vscode/**/*"
+    // Gotcha: If you exclude your tests like this, you will run into an issue
+    // where Typescript will suggest installing @types/jest. That's not the problem.
+    // The problem is that you shouldn't be excluding your tests here.
+    // ❌ "**/*.test.*", "**/*.spec.*", "__tests__"
+  ]
+}

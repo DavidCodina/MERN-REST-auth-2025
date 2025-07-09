@@ -1,0 +1,124 @@
+.SliderRoot {
+  --radix-slider-disabled-color: #d4d4d4;
+  /* --form-invalid-rgb is currently defined in formPlugin.ts */
+  --radix-slider-invalid-rgb: var(--form-invalid-rgb, 255, 0, 0);
+  /* --form-valid-rgb is currently defined in formPlugin.ts */
+  --radix-slider-valid-rgb: var(--form-valid-rgb, 0, 255, 0);
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  width: 100%;
+  height: var(--radix-slider-height, 20px);
+}
+
+.SliderTrack {
+  background-color: var(--radix-slider-track-bg, #d4d4d4);
+  position: relative;
+  flex-grow: 1;
+  border-radius: 9999px;
+  height: 4px;
+}
+
+.SliderRange {
+  position: absolute;
+  background-color: var(--radix-slider-range-bg, #60a5fa);
+  border-radius: 9999px;
+  height: 100%;
+}
+
+.SliderThumb {
+  display: block;
+  position: relative;
+  width: var(--radix-slider-height, 20px);
+  height: var(--radix-slider-height, 20px);
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+}
+
+.SliderThumb:hover {
+  background-color: var(--radix-slider-range-bg, #60a5fa);
+}
+
+.SliderThumb:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* ======================
+  .invalid-radix-slider 
+====================== */
+
+.invalid-radix-slider .SliderTrack {
+  background-color: var(--radix-slider-disabled-color, #d4d4d4);
+}
+
+.invalid-radix-slider .SliderRange {
+  background-color: rgb(var(--radix-slider-invalid-rgb));
+}
+
+.invalid-radix-slider .SliderThumb {
+  background-color: #fff;
+  border: 0.5px solid rgb(var(--radix-slider-invalid-rgb));
+}
+
+.invalid-radix-slider .SliderThumb:hover {
+}
+
+.invalid-radix-slider .SliderThumb:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(var(--radix-slider-invalid-rgb), 0.25);
+}
+
+/* ======================
+   .valid-radix-slider 
+====================== */
+
+.valid-radix-slider .SliderTrack {
+  background-color: var(--radix-slider-disabled-color, #d4d4d4);
+}
+
+.valid-radix-slider .SliderRange {
+  background-color: rgb(var(--radix-slider-valid-rgb));
+}
+
+.valid-radix-slider .SliderThumb {
+  background-color: #fff;
+  border: 0.5px solid rgb(var(--radix-slider-valid-rgb));
+}
+
+.valid-radix-slider .SliderThumb:hover {
+}
+
+.valid-radix-slider .SliderThumb:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(var(--radix-slider-valid-rgb), 0.25);
+}
+
+/* ======================
+        disabled
+====================== */
+
+.SliderRoot[data-disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.SliderRoot[data-disabled] .SliderTrack {
+  background-color: var(--radix-slider-disabled-color, #d4d4d4);
+}
+
+.SliderRoot[data-disabled] .SliderRange {
+  background-color: var(--radix-slider-disabled-color, #d4d4d4);
+}
+
+.SliderRoot[data-disabled] .SliderThumb {
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+}
+
+.SliderRoot[data-disabled] .SliderThumb:hover {
+  background-color: #fff;
+}

@@ -1,0 +1,51 @@
+.rte-actions-container {
+  display: flex;
+  gap: 10;
+  position: absolute;
+  text-align: right;
+  margin: 5px;
+  bottom: 0;
+  right: 0;
+}
+
+/* ======================
+
+====================== */
+
+.rte-delete-action-button {
+  --rte-edit-image-button-size: 32px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  align-items: center;
+  background-color: rgb(250, 250, 250);
+  border: 1px solid #aaa;
+  border-radius: var(--rte-edit-image-button-size);
+  box-shadow: none;
+  color: #aaa;
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  height: var(--rte-edit-image-button-size);
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+  transition: all 0.15s linear;
+  user-select: none;
+  vertical-align: middle;
+  width: var(--rte-edit-image-button-size);
+}
+
+.rte-delete-action-button:hover {
+  --rte-edit-image-button-size: 40px;
+  background-color: #ef4444;
+  border: 1px solid #b91c1c;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 20px;
+}

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="google" value="notranslate" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- <link rel="stylesheet" href="./styles/main.css" /> -->
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+      html {
+        /* Safari needs this to prevent horizontal scrolling. */
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+        color: #333;
+        background-color: #fff;
+        overflow-x: hidden; /* Safari needs this to prevent horizontal scrolling. */
+      }
+
+      .transition-none * {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -ms-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      p {
+        margin-bottom: 25px;
+        line-height: 1.75;
+      }
+
+      figure {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+
+      pre {
+        width: 90%;
+        margin: 0 auto 15px auto;
+        font-size: 14px;
+        color: #333;
+        background-color: rgb(255, 255, 255);
+        border: 2px solid #333;
+        border-radius: 15px;
+        overflow: scroll;
+      }
+
+      .article {
+        min-height: 300px;
+        margin: 0 auto 50px auto;
+        padding: 25px;
+        color: rgb(125, 125, 125);
+        color: #333;
+        background-color: rgb(245, 245, 245);
+        border: 2px solid rgb(150, 150, 150);
+        border-radius: 25px;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+      }
+
+      .text-white-3d {
+        margin-bottom: 25px;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: rgba(150, 150, 150, 0.75);
+        font-size: 40px;
+        font-family: Poppins;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-shadow:
+          0 1px 0 hsl(174, 5%, 86%),
+          0 2px 0 hsl(174, 5%, 84%),
+          0 3px 0 hsl(174, 5%, 82%),
+          0 4px 0 hsl(174, 5%, 80%),
+          0 5px 0 hsl(174, 5%, 78%),
+          0 6px 0 hsl(174, 5%, 76%),
+          0 7px 0 hsl(174, 5%, 74%),
+          0 8px 0 hsl(174, 5%, 72%),
+          0 9px 0 rgba(140, 140, 140, 0.5),
+          /* shadows */ 0px 10px 2px rgba(16, 16, 16, 0.2),
+          0px 12px 4px rgba(16, 16, 16, 0.2);
+      }
+
+      @media (max-width: 400px) {
+        .text-white-3d {
+          font-size: 32px;
+        }
+      }
+
+      .child-mb-1 > * {
+        margin-bottom: 0.25rem !important;
+      }
+      .child-mb-2 > * {
+        margin-bottom: 0.5rem !important;
+      }
+      .child-mb-3 > * {
+        margin-bottom: 1rem !important;
+      }
+      .child-mb-4 > * {
+        margin-bottom: 1.5rem !important;
+      }
+      .child-mb-5 > * {
+        margin-bottom: 3rem !important;
+      }
+
+      .w-90 {
+        width: 90% !important;
+      }
+
+      .flex-1 {
+        flex: 1;
+      }
+
+      /* =============================================================================
+                                  Media Queries
+      ============================================================================= */
+      /* Mobile-first media queries that follow Bootstrap's breakpoints.
+      Note: xs is implied by the default styles. */
+
+      /* sm */
+      @media (min-width: 576px) {
+      }
+
+      /* md */
+      @media (min-width: 768px) {
+      }
+
+      /* lg */
+      @media (min-width: 992px) {
+      }
+
+      /* xl */
+      @media (min-width: 1200px) {
+      }
+
+      /* xxl */
+      @media (min-width: 1400px) {
+        main > .container-fluid {
+          max-width: 1400px;
+        }
+      }
+    </style>
+    <title>API</title>
+  </head>
+
+  <body>
+    <!--  ========================================================================
+                                    main
+    ========================================================================== -->
+    <main class="py-5">
+      <div class="container-fluid pt-3 px-md-5">
+        <article class="article">
+          <h2 class="text-white-3d">API Notes!!!</h2>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,694 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* @import 'tailwindcss'; */
+
+/* Use @source followed by string to add another source */
+
+@layer theme, base, components, utilities;
+
+/* ========================================================================
+
+======================================================================== */
+/* 
+Even Tailwind v4, we now have Custom CSS properties for values like --color-green-500.
+That said, theme() still works in main.css and in plugins:
+
+.green-box-shadow { box-shadow: 0 0 0 0.25rem theme('colors.green.500/50%'); }
+
+And the string version of theme() also still works directly in classes:
+
+<div className='h-32 w-32 bg-red-500 shadow-[0_0_0_0.25rem_theme(colors.red.500/50%)]' />
+
+Incidentally, you can also create alpha variations on the fly doing this:
+<div className='h-32 w-32 bg-red-500 shadow-[0_0_0_0.25rem_oklch(from_var(--color-red-500)_l_c_h_/_0.5)]' />
+
+But really just do this: "bg-red-500/50%"
+
+
+
+Targeting children is now easier. Instead of doing this:
+
+<ul className='mb-6 bg-white [&>li]:p-1 [&>li]:outline [&>li]:outline-green-500'>
+  <li>One</li>
+  <li>Two</li>
+  <li>Three</li>
+</ul>
+
+We can do this:
+
+<ul className='mb-6 bg-white *:p-1 *:outline *:outline-blue-500'>
+  <li>One</li>
+  <li>Two</li>
+  <li>Three</li>
+</ul>
+
+# Currently, style changes seem a little sluggish. Sometimes I need to restart the server.
+# https://github.com/tailwindlabs/tailwindcss/issues/14800
+# Update React Component Library.
+# Try removing @tailwindcss/postcss@next postcss postcss-import from packages and posscss.config.js.
+# It fixed app build, but the library may actually depend on it.
+
+
+# Make sure to integrate any keyframes.
+
+# What does this do: text-sm/6
+
+# double-check there's no references to deprecated utitlities like flex-shrink-*, bg-opacity-*, etc.
+# outline-none --> outline-hidden
+
+# Make sure bg-transparent is a thing.
+
+# review tailwind-merge and check for any v4 updates.
+
+# Test everything against storybook.
+*/
+@import 'tailwindcss/theme' layer(theme);
+@theme {
+  /* All colors should be oklch for color functions to work.
+  However, this doesn't ensure that a library consumer will be doing this... */
+  /* --color-white: oklch(1 0 0);
+  --color-black: oklch(0 0 0); */
+
+  --body-color: rgb(237, 242, 249);
+
+  --font-sans: Poppins, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /* Used by MainLayout & Menu */
+  --dark-body-color: var(--color-slate-900);
+  /* Used by MainLayout */
+  --dark-text-color: #fff;
+  /* Used by Card (border), Tooltip (border), etc. */
+
+  --dark-primary-color: var(--color-cyan-400);
+  --dark-nav-link-hover-color: var(--color-pink-500);
+  /* Used by Card, Tooltip, etc. 
+  This is lighter than --dark-body-color.
+  It's used to accentuate Card backgrounds, etc.
+  */
+
+  --dark-bg-color: var(--color-slate-800);
+  /* Used by Card */
+  --dark-shadow-color: var(--color-neutral-950);
+
+  /* Custom CSS Properties: These may break the default tailwind-merge functionality. */
+  --text-xxs: 0.625rem;
+  --text-xxs--line-height: 1.5;
+}
+
+/* ========================================================================
+
+======================================================================== */
+
+@import 'tailwindcss/preflight' layer(base);
+@layer base {
+  /* Using smooth as Bootstrap does is annoying for page switches.
+  Programmaticaly disabling it every time we switch pages is tedious.
+  If we ever want smooth scroll for a particular page or feature, it's
+  easier to programmatically opt in, rather than opting out every time.*/
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      scroll-behavior: auto; /* overwrite bootstrap */
+    }
+  }
+
+  html {
+    /* This is generally what Tailwind expects, and what browsers tend
+    to default to. Changing the font-size in the root element (i.e.,
+    the html element will affect every aspect of tailwind that is 
+    relative to rem units.
+    font-size: 1rem; */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ======================
+  
+  ====================== */
+  /* align-items: flex-start fixes an issue that occurs in Storybook v6.
+  That also uses a #root. If using  align-items: flex-start causes
+  issues in the actual app, then we can switch to .root (adding it to index.html).
+  align-items: flex-start; can potentially horizontally squish the child content
+  if the page component does not have sufficient styles on the top-level wrapper.
+  For example, the following Tailwind classes: className='2xl:container flex-1 mx-auto w-full p-6'
+  Update: Storybook v7 still uses a #root, but for some reason these styles don't bleed in. */
+
+  #root {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    /* Septermber 4, 2023.
+    Kevin Powell has a video where he discourages using
+    vh units here.
+   
+      https://www.youtube.com/watch?v=veEqYQlfNx8 
+  
+    At 3:15 in the above video, he demonstrates that
+    on mobile web it doesn't always work out the way
+    we intend. One potential fix for this is to use
+    dvh units instead. Because browser support isn't 
+    all the way there yet, we can also use a vh fallback.
+  
+    It's important to note that he explicitly advises against
+    using 100vw because on windows it doesn't take into account
+    the scrollbar.
+    
+    The other alternative for setting height on #root would be
+    to also set height:100% on html and body, then set 
+    height:100%; min-height:100%; here (i.e., old-skool). 
+  
+    See also: 
+    https://www.youtube.com/watch?v=O16af0iRs44
+    https://web.dev/viewport-units/
+  
+    
+    */
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  th {
+    text-align: -webkit-match-parent;
+  }
+
+  /* ======================
+
+  ====================== */
+
+  @keyframes custom-spinner-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+}
+
+/* ========================================================================
+
+======================================================================== */
+/* The @layer components is provided as a place for you to add your own component classes */
+
+/* I'm not sure if this works because nesting is baked into Taiwlind v4 or because
+this is the CSS native nesting. */
+@layer components {
+  .nesting-test {
+    height: 100px;
+    width: 100px;
+    background-color: #15c213;
+    border: 2px solid black;
+    border-radius: 5px;
+    &:hover {
+      background-color: var(--color-rose-500);
+    }
+  }
+
+  /* Technically, this is a utility, but I want 
+  tailwind utilities to be able to overwrite it. */
+  .bg-off-white {
+    background-color: #fafafa;
+  }
+
+  /* Technically, this is a utility, but I want 
+  tailwind utilities to be able to overwrite it. */
+  .hide-border {
+    margin: -1px 0px -1px -1px;
+    width: calc(100% + 1px);
+  }
+
+  /* ======================
+        .terminal
+  ====================== */
+
+  .terminal {
+    margin-bottom: 0px;
+    background-color: #000;
+    background-image: radial-gradient(rgba(0, 150, 0, 0.5), black 120%);
+    border: 2px solid #bcc6cc;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+
+  .terminal::after {
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3) 1px,
+      transparent 1px,
+      transparent 2px
+    ) !important;
+    border-radius: inherit;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  /* ======================
+      ul.custom-list
+  ====================== */
+  /* Obviously, this will only work in conjunction with Bootstrap icons. */
+
+  ul.custom-list {
+    list-style: none;
+    padding-left: 1.5em;
+  }
+
+  ul.custom-list li {
+    margin-bottom: 10px;
+  }
+
+  ul.custom-list li::before {
+    content: '\F270'; /* '\F287' */
+    color: var(--bs-primary);
+    font-family: 'Bootstrap-icons';
+    font-weight: bold;
+    display: inline-block;
+    width: 1.25em;
+    margin-left: -1em;
+  }
+
+  /* ======================
+    .visually-hidden
+  ====================== */
+  /* Use Tailwind's sr-only instead. It's exactly the same. */
+
+  /* .visually-hidden,
+  .visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  } */
+
+  /* ======================
+      .transition-none 
+  ====================== */
+  /* Note: Tailwind already has a transition-none that sets
+  transition-property: none; However, this is useful for forcing
+  it everywhere. Currently, it's hardcoded on <html> to prevent 
+  light/dark theme transition from happening on mount. */
+
+  .transition-none-all,
+  .transition-none-all * {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  /* ======================
+      .hide-scrollbar 
+  ====================== */
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ======================
+        .outline
+====================== */
+  /* One way to create a text outline is with -webkit-text-stroke-width &
+-webkit-text-stroke-color. The problem there is that it may not be
+applicable to all browsers.
+
+Another approach entails using <svg>s. However, they seem very difficult 
+to manage, and the text doesn't wrap.
+
+  https://www.w3schools.com/graphics/svg_text.asp 
+  https://stackoverflow.com/questions/4919076/outline-effect-to-text 
+
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <svg
+      style={{
+        // display: 'inline-block',
+        fontFamily: 'Luckiest Guy',
+        fontSize: 50,
+        fontWeight: 'bold',
+        lineHeight: 1,
+        margin: '25px auto'
+      }}
+      height='38'
+      width='150'
+    >
+      <text
+        x='0'
+        y='37' // This corresponds to the bottom of the text
+        fill='#fff'
+        stroke='#000'
+        strokeWidth='1px'
+      >
+        Demo
+      </text>
+    </svg>
+  </div>
+
+
+// https://stackoverflow.com/questions/4919076/outline-effect-to-text
+A third approach involve the use of text-shadows. This is the most
+practical approach. For example:
+
+<h1
+  className='outline-strong outline-success outline-width-1 outline-shadow'
+  style={{
+    fontSize: 60,
+    fontWeight: 900,
+    margin: '50px auto',
+    textAlign: 'center'
+  }}
+>Testing</h1>
+*/
+
+  /* 1x */
+  .outline-weak {
+    --border-color: #000;
+    --border-width: 1px;
+    color: #fff;
+    text-shadow: var(--border-color) 0px 0px var(--border-width);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 10x */
+  .outline {
+    --border-color: #000;
+    --border-width: 1px;
+    color: #fff;
+    text-shadow:
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 20x */
+  .outline-strong {
+    --border-color: #000;
+    --border-width: 1px;
+    color: #fff;
+    text-shadow:
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width),
+      var(--border-color) 0px 0px var(--border-width);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Border colors... */
+  /* Use  theme(colors.xxx.500) instead. */
+  .outline-slate {
+    --border-color: var(--color-slate-500);
+  }
+
+  .outline-gray {
+    --border-color: var(--color-gray-500);
+  }
+
+  .outline-zinc {
+    --border-color: var(--color-zinc-500);
+  }
+
+  .outline-neutral {
+    --border-color: var(--color-neutral-500);
+  }
+
+  .outline-stone {
+    --border-color: var(--color-stone-500);
+  }
+
+  .outline-red {
+    --border-color: var(--color-red-500);
+  }
+
+  .outline-orange {
+    --border-color: var(--color-orange-500);
+  }
+
+  .outline-amber {
+    --border-color: var(--color-amber-500);
+  }
+
+  .outline-yellow {
+    --border-color: var(--color-yellow-500);
+  }
+
+  .outline-olive {
+    --border-color: var(--color-olive-500);
+  }
+
+  .outline-lime {
+    --border-color: var(--color-lime-500);
+  }
+
+  .outline-green {
+    --border-color: var(--color-green-500);
+  }
+
+  .outline-emerald {
+    --border-color: var(--color-emerald-500);
+  }
+
+  .outline-teal {
+    --border-color: var(--color-teal-500);
+  }
+
+  .outline-cyan {
+    --border-color: var(--color-cyan-500);
+  }
+
+  .outline-sky {
+    --border-color: var(--color-sky-500);
+  }
+
+  .outline-blue {
+    --border-color: var(--color-blue-500);
+  }
+
+  .outline-indigo {
+    --border-color: var(--color-indigo-500);
+  }
+
+  .outline-violet {
+    --border-color: var(--color-violet-500);
+  }
+
+  .outline-purple {
+    --border-color: var(--color-purple-500);
+  }
+
+  .outline-fuchsia {
+    --border-color: var(--color-fuchsia-500);
+  }
+
+  .outline-pink {
+    --border-color: var(--color-pink-500);
+  }
+
+  .outline-rose {
+    --border-color: var(--color-rose-500);
+  }
+
+  .outline-brown {
+    --border-color: var(--color-brown-500);
+  }
+
+  .outline-light {
+    --border-color: var(--color-light);
+  }
+
+  .outline-dark {
+    --border-color: var(--color-dark);
+  }
+
+  /* Border widths... */
+  .outline-width-dot-5 {
+    --border-width: 0.5px;
+  }
+
+  .outline-width-1 {
+    --border-width: 1px;
+  }
+
+  .outline-width-1-dot-5 {
+    --border-width: 1.5px;
+  }
+
+  .outline-width-2 {
+    --border-width: 2px;
+  }
+  .outline-width-2-dot-5 {
+    --border-width: 2.5px;
+  }
+
+  .outline-shadow {
+    filter: drop-shadow(0px 1px 0.5px rgba(0, 0, 0, 0.75));
+  }
+
+  /* ======================
+
+  ====================== */
+
+  .stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    content: '';
+  }
+
+  /* ======================
+    React Toastify Hacks
+  ====================== */
+
+  .Toastify__toast-theme--dark {
+    --toastify-color-dark: theme(colors.slate.800);
+    border: 1px solid theme(colors.slate.600);
+  }
+
+  /* .Toastify__toast-theme--dark.Toastify__toast--default {
+  border: 1px solid var(--toastify-color-light);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--info {
+  border: 1px solid var(--toastify-color-info);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--success {
+  border: 1px solid var(--toastify-color-success);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--warning {
+  border: 1px solid var(--toastify-color-warning);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--error {
+  border: 1px solid var(--toastify-color-error);
+} */
+
+  /* boxShadow: `0 0 0 0.25rem theme('colors.${color}.500/50%')` */
+  /* .green-box-shadow {
+    box-shadow:
+      0 4px 6px -1px oklch(0.723 0.219 149.579 / 0.3),
+      0 2px 4px -2px oklch(0.723 0.219 149.579 / 0.2);
+  } */
+}
+
+/* ========================================================================
+
+======================================================================== */
+
+@import 'tailwindcss/utilities' layer(utilities);
+
+/* To add a custom utility in v4.0, use the new @utility directive: 
+
+@utility your-class-name {
+  ...
+}
+*/
+
+/* ========================================================================
+                                  Plugins
+======================================================================== */
+/* 
+https://tailwindcss.com/docs/v4-beta#using-plugins
+To load a plugin in v4.0, use the the new @plugin directive.
+The @plugin directive takes either a package name or a local path.
+*/
+
+/* 
+
+# Be mindful that the components/plugins may not work the same in the absence of base styles.
+
+# Grid breakpoints may need to change.
+
+# paginationPlugin needs an update.
+
+# RadixHoverCard needs an update
+
+# tablePlugin needs to correct for it's conflict with the Tailwind `.table` class.
+# However, this may also entail reevaluating SimpleTable, and the Tanstack Table.
+
+# review tablePlugin and formPlugin in regard to their global CSS properties.
+# We probably want to make them more specific..
+*/
+
+@plugin "../../tw-plugins/accordionPlugin.ts";
+@plugin "../../tw-plugins/alertPlugin.ts";
+@plugin "../../tw-plugins/badgePlugin.ts";
+@plugin "../../tw-plugins/basePlugin.ts";
+@plugin "../../tw-plugins/breadcrumbPlugin.ts";
+
+@plugin "../../tw-plugins/buttonPlugin.ts";
+@plugin "../../tw-plugins/dropdownPlugin.ts";
+@plugin "../../tw-plugins/listGroupPlugin.ts";
+@plugin "../../tw-plugins/modalPlugin.ts";
+@plugin "../../tw-plugins/offCanvasPlugin.ts";
+
+@plugin "../../tw-plugins/paginationPlugin.ts";
+@plugin "../../tw-plugins/placeholderPlugin.ts";
+@plugin "../../tw-plugins/popoverPlugin.ts";
+@plugin "../../tw-plugins/readMorePlugin.ts";
+@plugin "../../tw-plugins/scrollAreaPlugin.ts";
+
+@plugin "../../tw-plugins/spinnerPlugin.ts";
+@plugin "../../tw-plugins/tablePlugin.ts";
+@plugin "../../tw-plugins/tabsPlugin.ts";
+@plugin "../../tw-plugins/testPlugin.ts";
+@plugin "../../tw-plugins/tooltipPlugin.ts";
+
+@plugin "../../tw-plugins/formPlugin//index.ts";
+@plugin "tailwindcss-animate";
+
+/* 
+Add the following plugins:
+
+  startingStylePlugin, 
+  sPlugin, 
+  tailwindAnimate
+*/
+
+/* ========================================================================
+                           Dark Mode
+======================================================================== */
+
+@variant dark (&:where(.dark, .dark *));

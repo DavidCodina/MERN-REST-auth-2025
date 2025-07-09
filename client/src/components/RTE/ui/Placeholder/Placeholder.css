@@ -1,0 +1,16 @@
+.rte-placeholder {
+  /* font-size: 16px;  */
+  color: #999;
+  display: inline-block;
+  font-style: italic;
+  /* The 25px is to make space for the DraggableBlockPlugin. */
+  left: 25px;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 10px;
+  text-overflow: ellipsis;
+  top: 10px;
+  user-select: none;
+  white-space: nowrap;
+}

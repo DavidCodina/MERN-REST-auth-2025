@@ -1,0 +1,811 @@
+/*
+# Check for classes of  'alignment', 'active'
+*/
+
+/* This is applied to <div className='rte-editor-shell'> directly inside of <LexicalComposer initialConfig={initialConfig}> */
+.rte-editor-shell {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+  position: relative;
+}
+
+/* .editor-container is a direct child of <div className='rte-editor-shell'>. */
+.rte-editor-shell .rte-editor-container {
+  background: #fff;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  display: block;
+  position: relative;
+}
+
+/* 
+<div className='editor-scroller' is passed to the contentEditable prop.
+ It's essentialy a wrapper around the actual <ContentEditable /> component.
+
+<RichTextPlugin
+  contentEditable={<div className='editor-scroller'>...</div>}
+/>
+*/
+
+.rte-editor-scroller {
+  border: 0;
+  display: flex;
+  min-height: 150px;
+  outline: 0;
+  position: relative;
+  /* Why do we need this? It allows us to see the resize handle in the lower right. */
+  overflow: auto;
+  resize: vertical;
+  z-index: 0; /* ??? */
+}
+
+.rte-editor {
+  flex: auto;
+  position: relative;
+  resize: vertical;
+  width: 100%;
+  z-index: -1; /* ??? */
+}
+
+/* ======================
+  .rte-typeahead-popover 
+====================== */
+/* This is used within AutoEmbedPlugin.tsx & EmojiPickerPlugin.tsx.
+In the playground demo they are also utilized by the MentionsPlugin, but
+that's not implemented here.*/
+
+.rte-typeahead-popover {
+  background: #fff;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  margin-top: 25px;
+}
+
+.rte-typeahead-popover ul {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.rte-typeahead-popover ul::-webkit-scrollbar {
+  display: none;
+}
+
+.rte-typeahead-popover ul {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.rte-typeahead-popover ul li {
+  margin: 0;
+  min-width: 180px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.rte-typeahead-popover ul li.selected {
+  background: #eee;
+}
+
+.rte-typeahead-popover li {
+  margin: 0 8px 0 8px;
+  padding: 8px;
+  color: #050505;
+  cursor: pointer;
+  line-height: 16px;
+  font-size: 15px;
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+  flex-shrink: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 0;
+}
+
+.rte-typeahead-popover li.active {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+}
+
+.rte-typeahead-popover li:first-child {
+  border-radius: 8px 8px 0px 0px;
+}
+
+.rte-typeahead-popover li:last-child {
+  border-radius: 0px 0px 8px 8px;
+}
+
+.rte-typeahead-popover li:hover {
+  background-color: #eee;
+}
+
+.rte-typeahead-popover li .rte-text {
+  display: flex;
+  flex-grow: 1;
+  line-height: 20px;
+  min-width: 150px;
+}
+
+/* This would only be for a MentionsPlugin, which we don't currently have.
+.rte-typeahead-popover li [class^='rte-icon-'] {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  user-select: none;
+  margin-right: 8px;
+  line-height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+*/
+
+/* When typing ':smile' the emoji popup menu will appear.
+This sets the min height on it. */
+.rte-emoji-menu {
+  width: 200px;
+}
+
+/* ======================
+
+====================== */
+
+.rte-icon-chevron-down {
+  background-image: url(./icons/chevron-down.svg);
+}
+
+.rte-icon-undo {
+  background-image: url(./icons/arrow-counterclockwise.svg);
+}
+
+.rte-icon-redo {
+  background-image: url(./icons/arrow-clockwise.svg);
+}
+
+/* In cases like 'paragraph', 'h1'-'h6', 'bullet', 'number', 'check', 'quote', 'code', etc. It's important 
+that the name match the blockType because blockType is used to dynamically generate the className. */
+.rte-icon-paragraph {
+  background-image: url(./icons/text-paragraph.svg);
+}
+
+.rte-icon-h1 {
+  background-image: url(./icons/type-h1.svg);
+}
+
+.rte-icon-h2 {
+  background-image: url(./icons/type-h2.svg);
+}
+
+.rte-icon-h3 {
+  background-image: url(./icons/type-h3.svg);
+}
+
+.rte-icon-h4 {
+  background-image: url(./icons/type-h4.svg);
+}
+
+.rte-icon-h5 {
+  background-image: url(./icons/type-h5.svg);
+}
+
+.rte-icon-h6 {
+  background-image: url(./icons/type-h6.svg);
+}
+
+.rte-icon-bullet {
+  background-image: url(./icons/list-ul.svg);
+}
+
+.rte-icon-number {
+  background-image: url(./icons/list-ol.svg);
+}
+
+.rte-icon-check {
+  background-image: url(./icons/square-check.svg);
+}
+
+.rte-icon-quote {
+  background-image: url(./icons/chat-square-quote.svg);
+}
+
+.rte-icon-code {
+  background-image: url(./icons/code.svg);
+}
+
+.rte-icon-font-family {
+  background-image: url(./icons/font-family.svg);
+}
+
+.rte-icon-add {
+  background-image: url(./icons/add-sign.svg);
+}
+
+/* The plus is thinner. */
+.rte-icon-plus {
+  background-image: url(./icons/plus.svg);
+}
+
+.rte-icon-minus {
+  background-image: url(./icons/minus-sign.svg);
+}
+
+.rte-icon-bold {
+  background-image: url(./icons/type-bold.svg);
+}
+
+.rte-icon-italic {
+  background-image: url(./icons/type-italic.svg);
+}
+
+.rte-icon-underline {
+  background-image: url(./icons/type-underline.svg);
+}
+
+.rte-icon-link {
+  background-image: url(./icons/link.svg);
+}
+
+.rte-icon-strikethrough {
+  background-image: url(./icons/type-strikethrough.svg);
+}
+
+.rte-icon-subscript {
+  background-image: url(./icons/type-subscript.svg);
+}
+
+.rte-icon-superscript {
+  background-image: url(./icons/type-superscript.svg);
+}
+
+.rte-icon-font-color {
+  background-image: url(./icons/font-color.svg);
+}
+
+.rte-icon-bg-color {
+  background-image: url(./icons/bg-color.svg);
+}
+
+.rte-icon-dropdown-more {
+  background-image: url(./icons/dropdown-more.svg);
+}
+
+.rte-icon-clear {
+  background-image: url(./icons/trash.svg);
+}
+
+.rte-icon-horizontal-rule {
+  background-image: url(./icons/horizontal-rule.svg);
+}
+
+.rte-icon-image {
+  background-image: url(./icons/image.svg);
+}
+
+.rte-icon-youtube {
+  background-image: url(./icons/youtube.svg);
+}
+
+.rte-icon-left-align {
+  background-image: url(./icons/text-left.svg);
+}
+
+.rte-icon-center-align {
+  background-image: url(./icons/text-center.svg);
+}
+
+.rte-icon-right-align {
+  background-image: url(./icons/text-right.svg);
+}
+
+.rte-icon-justify-align {
+  background-image: url(./icons/justify.svg);
+}
+
+.rte-icon-indent {
+  background-image: url(./icons/indent.svg);
+}
+
+.rte-icon-outdent {
+  background-image: url(./icons/outdent.svg);
+}
+
+.rte-icon-pencil-fill {
+  background-image: url(./icons/pencil-fill.svg);
+}
+
+.rte-icon-close {
+  background-image: url(./icons/close.svg);
+}
+
+.rte-icon-success-alt {
+  background-image: url(./icons/success-alt.svg);
+}
+
+.rte-icon-draggable-block-menu {
+  background-image: url(./icons/draggable-block-menu.svg);
+}
+
+/* ========================================================================
+
+======================================================================== */
+/* .rte-editor-image & .rte-inline-editor-image are never directly applied to 
+a <span> in any of the code files. Instead, those two classes are set in the
+theme.tsx file. Then they are applied by using the theme within the respective 
+ImageNode and InlineImageNode:
+ 
+    const className = theme.image
+    const className = `${config.theme.inlineImage} position-${this.__position}`
+
+*/
+.rte-editor-shell span.rte-editor-image {
+  cursor: default;
+  display: inline-block;
+  position: relative;
+  user-select: none;
+}
+
+.rte-editor-shell .rte-editor-image img {
+  max-width: 100%;
+  cursor: default;
+}
+
+.rte-editor-shell .rte-editor-image img.focused {
+  outline: 2px solid rgb(60, 132, 244);
+  user-select: none;
+}
+
+.rte-editor-shell .rte-editor-image img.focused.draggable {
+  cursor: grab;
+}
+
+.rte-editor-shell .rte-editor-image img.focused.draggable:active {
+  cursor: grabbing;
+}
+
+/* ======================
+
+====================== */
+
+.rte-editor-shell span.rte-inline-editor-image {
+  cursor: default;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.rte-editor-shell .rte-inline-editor-image img {
+  max-width: 100%;
+  cursor: default;
+}
+
+.rte-editor-shell .rte-inline-editor-image img.focused {
+  outline: 2px solid rgb(60, 132, 244);
+}
+
+.rte-editor-shell .rte-inline-editor-image img.focused.draggable {
+  cursor: grab;
+}
+
+.rte-editor-shell .rte-inline-editor-image img.focused.draggable:active {
+  cursor: grabbing;
+}
+
+.rte-editor-shell .rte-inline-editor-image.position-full {
+  width: 100% !important;
+  margin: 1em 0 1em 0;
+}
+
+.rte-editor-shell .rte-inline-editor-image.position-full img {
+  width: 100% !important;
+}
+
+.rte-editor-shell .rte-inline-editor-image.position-left {
+  float: left;
+  margin: 0.5em 0.5em 0 0;
+}
+
+.rte-editor-shell .rte-inline-editor-image.position-right {
+  float: right;
+  margin: 0.5em 0 0 0.5em;
+}
+
+/* ======================
+
+====================== */
+
+.rte-edit-image-button {
+  --rte-edit-image-button-size: 32px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  align-items: center;
+  background-color: #a3a3a3;
+  border: 1px solid #525252;
+  border-radius: var(--rte-edit-image-button-size);
+  box-shadow: none;
+  color: #fff;
+  display: flex;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  height: var(--rte-edit-image-button-size);
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  opacity: 0.5;
+  padding: 0;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+  transition: all 0.15s linear;
+  user-select: none;
+  vertical-align: middle;
+  width: var(--rte-edit-image-button-size);
+}
+
+.rte-inline-editor-image:hover .rte-edit-image-button,
+.rte-edit-image-button:hover {
+  --rte-edit-image-button-size: 40px;
+  background-color: #3b82f6; /* Tailwind blue 500 */
+  border: 1px solid #1d4ed8;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
+  font-size: 20px;
+  opacity: 1;
+}
+
+/* ======================
+
+====================== */
+/* You only see this when the EmojisPlugin generates a transformed emoji. */
+
+.rte-emoji {
+  color: transparent;
+  caret-color: rgb(5, 5, 5);
+  background-size: 16px 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  margin: 0 -1px;
+}
+
+.rte-emoji-inner {
+  padding: 0 0.15em;
+}
+
+.rte-emoji-inner::selection {
+  color: transparent;
+  background-color: rgba(150, 150, 150, 0.4);
+}
+
+.rte-emoji-inner::moz-selection {
+  color: transparent;
+  background-color: rgba(150, 150, 150, 0.4);
+}
+
+/* ========================================================================
+                                   Form Styles
+======================================================================== */
+/* By using our own input, select, and button styles, it makes the RTE more portable. */
+
+:root {
+  --rte-form-label-color: #444;
+  --rte-form-label-font-size: 14px;
+
+  --rte-form-control-border-color: #9ca3af;
+
+  --rte-file-selector-button-background-color: #a3a3a3; /* Tailwind neutral 400 */
+  --rte-file-selector-button-hover-background-color: #737373; /* Tailwind neutral 500 */
+
+  --rte-file-selector-button-color: #fff;
+  --rte-file-selector-button-hover-color: #fff;
+}
+
+/* ======================
+    .rte-form-control
+====================== */
+
+.rte-form-group {
+  margin-bottom: 25px;
+}
+
+.rte-form-label {
+  color: var(--rte-form-label-color, #444);
+  font-size: var(--rte-form-label-font-size, 14);
+  font-weight: bold;
+  margin-bottom: 16;
+}
+
+.rte-form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid var(--rte-form-control-border-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rte-form-control {
+    transition: none;
+  }
+}
+
+.rte-form-control[type='file'] {
+  overflow: hidden;
+}
+
+.rte-form-control[type='file']:not(:disabled):not([readonly]) {
+  cursor: pointer;
+}
+
+.rte-form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.rte-form-control::-moz-placeholder {
+  color: rgba(33, 37, 41, 0.75);
+  opacity: 1;
+}
+
+.rte-form-control::placeholder {
+  color: rgba(33, 37, 41, 0.75);
+  opacity: 1;
+}
+
+.rte-form-control:disabled {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+.rte-form-control::-webkit-file-upload-button {
+  padding: 0.375rem 0.75rem;
+  margin: -0.375rem -0.75rem;
+  -webkit-margin-end: 0.75rem;
+  margin-inline-end: 0.75rem;
+  color: var(--rte-file-selector-button-color);
+  background-color: var(--rte-file-selector-button-background-color);
+  pointer-events: none;
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  border-inline-end-width: 1px;
+  border-radius: 0;
+  -webkit-transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.rte-form-control::file-selector-button {
+  padding: 0.375rem 0.75rem;
+  margin: -0.375rem -0.75rem;
+  -webkit-margin-end: 0.75rem;
+  margin-inline-end: 0.75rem;
+  color: var(--rte-file-selector-button-color);
+  background-color: var(--rte-file-selector-button-background-color);
+  pointer-events: none;
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  border-inline-end-width: 1px;
+  border-radius: 0;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rte-form-control::-webkit-file-upload-button {
+    -webkit-transition: none;
+    transition: none;
+  }
+  .rte-form-control::file-selector-button {
+    transition: none;
+  }
+}
+
+.rte-form-control:hover:not(:disabled):not(
+    [readonly]
+  )::-webkit-file-upload-button {
+  background-color: var(--rte-file-selector-button-hover-background-color);
+  color: var(--rte-file-selector-button-hover-color);
+}
+
+.rte-form-control:hover:not(:disabled):not([readonly])::file-selector-button {
+  background-color: var(--rte-file-selector-button-hover-background-color);
+  color: var(--rte-file-selector-button-hover-color);
+}
+
+.rte-form-control-sm {
+  min-height: calc(1.5em + 0.5rem + calc(1px * 2));
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+.rte-form-control-sm::-webkit-file-upload-button {
+  padding: 0.25rem 0.5rem;
+  margin: -0.25rem -0.5rem;
+  -webkit-margin-end: 0.5rem;
+  margin-inline-end: 0.5rem;
+}
+
+.rte-form-control-sm::file-selector-button {
+  padding: 0.25rem 0.5rem;
+  margin: -0.25rem -0.5rem;
+  -webkit-margin-end: 0.5rem;
+  margin-inline-end: 0.5rem;
+}
+
+/* ======================
+    .rte-form-select
+====================== */
+
+.rte-form-select {
+  --rte-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-image: var(--rte-form-select-bg-img);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: 1px solid var(--rte-form-control-border-color);
+  border-radius: 0.375rem;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rte-form-select {
+    transition: none;
+  }
+}
+.rte-form-select:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+.rte-form-select[multiple],
+.rte-form-select[size]:not([size='1']) {
+  padding-right: 0.75rem;
+  background-image: none;
+}
+.rte-form-select:disabled {
+  background-color: #e9ecef;
+}
+.rte-form-select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #212529;
+}
+
+.rte-form-select-sm {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+/* ========================================================================
+                                Button Styles
+======================================================================== */
+
+:root {
+  --rte-button-background-color: #a3a3a3; /* Tailwind neutral 400 */
+  --rte-button-hover-background-color: #737373; /* Tailwind neutral 500 */
+
+  --rte-button-color: #fff;
+  --rte-button-hover-color: #fff;
+
+  --rte-button-border-color: #525252; /* Tailwind neutral 600 */
+  --rte-button-hover-border-color: #404040; /* Tailwind neutral 700 */
+
+  --rte-button-font-size: 14px;
+  --rte-button-padding: 0.3rem 0.75rem;
+  --rte-button-line-height: 1.5;
+  --rte-button-font-weight: 600;
+
+  --rte-button-border-radius: 0.35rem;
+
+  --rte-button-focus-box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
+}
+
+.rte-button {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  background-color: var(--rte-button-background-color, #a3a3a3);
+  border: 1px solid var(--rte-button-border-color, #525252);
+  border-radius: var(--rte-button-border-radius);
+  color: var(--rte-button-color);
+  display: inline-block;
+  font-family: inherit;
+  font-size: var(--rte-button-font-size, 14px);
+  font-weight: var(--rte-button-font-weight, 700);
+  line-height: var(--rte-button-line-height, 1.5);
+  margin: 0;
+  padding: var(--rte-button-padding);
+  text-align: center;
+  transition:
+    color 0.15s linear,
+    background-color 0.15s linear,
+    border-color 0.15s linear,
+    box-shadow 0.15s linear;
+  scale: 0.15s linear;
+  user-select: none;
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rte-button {
+    transition: none;
+  }
+}
+
+.rte-button:hover {
+  background-color: var(--rte-button-hover-background-color, #737373);
+  border-color: var(--rte-button-hover-border-color, #404040);
+  color: var(--rte-button-hover-color, #fff);
+  text-decoration: none;
+}
+
+.rte-button:focus {
+  box-shadow: var(--rte-button-focus-box-shadow);
+  outline: 0;
+}
+
+.rte-button:disabled {
+  opacity: 0.65;
+}
+
+.rte-button:not(:disabled) {
+  cursor: pointer;
+}
+
+.rte-button:not(:disabled):active {
+  transform: scale(0.99);
+}

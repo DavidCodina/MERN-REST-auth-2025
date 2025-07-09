@@ -1,0 +1,83 @@
+// Vite now splits the tsconfig.json into this + tsconfig.app.json + tsconfig.node.json
+// This ends up creating problems, so I still prefer having a single tssconfig.json.
+
+{
+  // "typedocOptions": {
+  //   "entryPoints": ["src/components", "src/hooks"],
+  //   "out": "docs"
+  // },
+  "compilerOptions": {
+    "target": "ES2020",
+
+    // https://www.youtube.com/watch?v=OQIsQDFtEnI
+    "useDefineForClassFields": true,
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Using ES2020 here certain consequences.
+    // For example, if you try to use str.replaceAll() in the app,
+    // it will tell you:
+    //
+    //   Property 'replaceAll' does not exist on type 'string'.
+    //   Do you need to change your target library? Try changing the 'lib'
+    //   compiler option to 'es2021' or later.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    "noUncheckedIndexedAccess": true, // https://www.youtube.com/watch?v=OQIsQDFtEnI
+    "types": [
+      "vitest/globals",
+      "vitest/importMeta"
+      // "react/experimental"
+    ],
+    "baseUrl": "src",
+    "paths": {
+      // I think .js is correct even though it's technically .ts
+      "tailwind.config": ["../tailwind.config.js"]
+    },
+
+    "allowJs": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    // This needs to be omitted or false for this rule to work in eslintrc.json:
+    // "@typescript-eslint/no-unused-vars": [ "warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "noUnusedLocals": false,
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // We don't need this rule either. It would trigger in situations like this:
+    //
+    //   export function add(a: number, b: number) {
+    //     // 'b' is declared but its value is never read.ts(6133)
+    //     return a
+    //   }
+    //
+    // However, it's already covered by eslint@typescript-eslint/no-unused-vars.
+    // And if we wanted to disable the linting rule we'd just make it _b.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    "noUnusedParameters": false
+    // "noFallthroughCasesInSwitch": true,
+    // "noUncheckedSideEffectImports": true
+  },
+  "include": [
+    "src/**/*",
+    "tw-plugins/**/*",
+    ".storybook/**/*",
+    "tailwind.config.ts",
+    "vite.config.ts"
+  ]
+}

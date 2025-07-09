@@ -1,0 +1,36 @@
+/* https://github.com/facebook/lexical/blob/main/packages/lexical-playground/src/plugins/ToolbarPlugin/fontSize.css */
+
+.rte-font-size-input {
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px #ccc;
+  color: #777;
+  font-weight: bold;
+  font-size: 14px;
+  height: 25px;
+  outline: none; /* Added */
+  padding: 2px 4px;
+  text-align: center;
+  width: 50px;
+}
+
+.rte-font-size-input[type='number']::-webkit-outer-spin-button,
+.rte-font-size-input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rte-font-size-input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.rte-font-decrement {
+  padding: 0px;
+  margin-left: 2.5px;
+  margin-right: 5px;
+}
+
+.rte-font-increment {
+  padding: 0px;
+  margin-left: 5px;
+  margin-right: 2.5px;
+}

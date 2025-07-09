@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="google" value="notranslate" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+      html {
+        /* Safari needs this to prevent horizontal scrolling. */
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+        color: #333;
+        background-color: #fff;
+        overflow-x: hidden; /* Safari needs this to prevent horizontal scrolling. */
+      }
+
+      .transition-none * {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -ms-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      p {
+        margin-bottom: 25px;
+        line-height: 1.75;
+      }
+
+      figure {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+
+      pre {
+        width: 90%;
+        margin: 0 auto 15px auto;
+        font-size: 14px;
+        color: #333;
+        background-color: rgb(255, 255, 255);
+        border: 2px solid #333;
+        border-radius: 15px;
+        overflow: scroll;
+      }
+
+      .article {
+        min-height: 300px;
+        margin: 0 auto 50px auto;
+        padding: 25px;
+        color: rgb(125, 125, 125);
+        color: #333;
+        background-color: rgb(245, 245, 245);
+        border: 2px solid rgb(150, 150, 150);
+        border-radius: 25px;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+      }
+
+      .text-white-3d {
+        margin-bottom: 25px;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: rgba(150, 150, 150, 0.75);
+        font-size: 40px;
+        font-family: Poppins;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-shadow: 0 1px 0 hsl(174, 5%, 86%), 0 2px 0 hsl(174, 5%, 84%),
+          0 3px 0 hsl(174, 5%, 82%), 0 4px 0 hsl(174, 5%, 80%),
+          0 5px 0 hsl(174, 5%, 78%), 0 6px 0 hsl(174, 5%, 76%),
+          0 7px 0 hsl(174, 5%, 74%), 0 8px 0 hsl(174, 5%, 72%),
+          0 9px 0 rgba(140, 140, 140, 0.5),
+          /* shadows */ 0px 10px 2px rgba(16, 16, 16, 0.2),
+          0px 12px 4px rgba(16, 16, 16, 0.2);
+      }
+
+      @media (max-width: 400px) {
+        .text-white-3d {
+          font-size: 32px;
+        }
+      }
+
+      .child-mb-1 > * {
+        margin-bottom: 0.25rem !important;
+      }
+      .child-mb-2 > * {
+        margin-bottom: 0.5rem !important;
+      }
+      .child-mb-3 > * {
+        margin-bottom: 1rem !important;
+      }
+      .child-mb-4 > * {
+        margin-bottom: 1.5rem !important;
+      }
+      .child-mb-5 > * {
+        margin-bottom: 3rem !important;
+      }
+
+      .w-90 {
+        width: 90% !important;
+      }
+
+      .flex-1 {
+        flex: 1;
+      }
+
+      #primary-navbar {
+        background: #000000;
+        background: -webkit-linear-gradient(to left, #434343, #000000);
+        background: linear-gradient(to left, #434343, #000000);
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+      }
+
+      /* =============================================================================
+                                  Media Queries
+      ============================================================================= */
+      /* Mobile-first media queries that follow Bootstrap's breakpoints.
+  Note: xs is implied by the default styles. */
+
+      /* sm */
+      @media (min-width: 576px) {
+      }
+
+      /* md */
+      @media (min-width: 768px) {
+      }
+
+      /* lg */
+      @media (min-width: 992px) {
+      }
+
+      /* xl */
+      @media (min-width: 1200px) {
+      }
+
+      /* xxl */
+      @media (min-width: 1400px) {
+        main > .container-fluid {
+          max-width: 1400px;
+        }
+      }
+    </style>
+    <title>Notes</title>
+  </head>
+
+  <body class="transition-none">
+    <header id="primary-header">
+      <nav id="primary-navbar" class="navbar navbar-expand-sm navbar-dark">
+        <div class="container-fluid">
+          <a id="brand" class="navbar-brand" href="#!">Notes</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#nav-menu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div id="nav-menu" class="collapse navbar-collapse">
+            <div class="navbar-nav ms-auto">
+              <!-- <a class="nav-link link-light" href="#!">Link 1</a> -->
+            </div>
+          </div>
+          <!-- <div id="nav-menu" class="collapse navbar-collapse"> -->
+        </div>
+        <!-- <div class="container-fluid"> -->
+      </nav>
+    </header>
+
+    <!--  ========================================================================
+                                    main
+  ========================================================================== -->
+
+    <main class="py-5">
+      <div class="container-fluid pt-3 px-md-5">
+        <article class="article">
+          <h2 class="text-white-3d">Overview:</h2>
+
+          <p>
+            To begin I watched this
+            <a
+              href="https://www.youtube.com/watch?v=r1auJEf9ISo"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Colby Fayock tutorial</a
+            >, where we built this simple demo.
+          </p>
+
+          <pre><code>
+  // Third-party imports
+  import { Fragment, useState, useEffect, useRef } from 'react'
+  
+  // Custom imports
+  import { useTitle } from 'hooks'
+  import { HR, Title, Waves } from 'components'
+  
+  /* ========================================================================
+                                  PageHome
+  ======================================================================== */
+  
+  const PageHome = () => {
+    const article3Ref = useRef&#60;HTMLElement | null&#62;(null)
+    const [article3Intersecting, setArticle3Intersecting] = useState(false)
+  
+    useTitle('Home')
+  
+    /* ======================
+            useEffect()
+    ====================== */
+  
+    useEffect(() => {
+      if (article3Ref.current === null) { return }
+  
+      const observer = new IntersectionObserver(
+        (entries, _observer) => {
+          const entry = entries?.[0]
+  
+          if (entry) {
+            setArticle3Intersecting(entry.isIntersecting)
+            console.log('entry:', entry)
+          }
+        },
+        {
+          rootMargin: '0px',
+          threshold: 0.5
+        }
+      )
+  
+      observer.observe(article3Ref.current)
+    }, [])
+  
+    /* ======================
+            return
+    ====================== */
+  
+    return (
+      &#60;div className='relative mx-auto w-full flex-1 p-6 2xl:container'&#62;
+        ...
+
+        &#60;article className='mb-6 rounded-lg border border-gray-300 bg-white p-3 shadow'&#62;
+          &#60;h3 className='fw-bold text-blue-500'&#62;Section 1:&#60;/h3&#62;
+          ...
+        &#60;/article&#62;
+
+        &#60;article className='mb-6 rounded-lg border border-gray-300 bg-white p-3 shadow'&#62;
+          &#60;h3 className='fw-bold text-blue-500'&#62;Section 2:&#60;/h3&#62;
+          ...
+        &#60;/article&#62;
+
+        &#60;article 
+          className='mb-6 rounded-lg border border-gray-300 bg-white p-3 shadow'
+          ref={article3Ref}
+          style={{ outline: article3Intersecting ? '2px dashed #409' : ''}}
+        &#62;
+          &#60;h3 className='fw-bold text-blue-500'&#62;Section 3:&#60;/h3&#62;
+          ...
+        &#60;/article&#62;
+
+        &#60;article className='mb-6 rounded-lg border border-gray-300 bg-white p-3 shadow'&#62;
+          &#60;h3 className='fw-bold text-blue-500'&#62;Section 4:&#60;/h3&#62;
+          ...
+        &#60;/article&#62;
+
+        &#60;article className='mb-6 rounded-lg border border-gray-300 bg-white p-3 shadow'&#62;
+          &#60;h3 className='fw-bold text-blue-500'&#62;Section 5:&#60;/h3&#62;
+          ...
+        &#60;/article&#62;
+      &#60;/div&#62;
+    )
+  }
+  
+  export default PageHome
+          </code></pre>
+        </article>
+
+        <!-- ===========================================================================
+        
+        ============================================================================ -->
+
+        <article class="article">
+          <h2 class="text-white-3d">Using A Custom Hook:</h2>
+
+          <p>
+            For this Colby Fayock switched to
+            <a
+              href="https://www.npmjs.com/package/react-intersection-observer"
+              target="_blank"
+              rel="noopener noreferrer"
+              >react-intersection-observer</a
+            >
+            (1,415,821 hits), not to be confused with
+            <a
+              href="https://www.npmjs.com/package/react-intersection-observer-hook"
+              target="_blank"
+              rel="noopener noreferrer"
+              >react-intersection-observer-hook</a
+            >
+            (75,951 hits). Initially, I used the latter, and it also worked well
+            enough. Alteratively, if you want a very low
+            <code>kb</code> solution that is less magical, you could go for
+            <a
+              href="https://usehooks-ts.com/react-hook/use-intersection-observer"
+              target="_blank"
+              rel="noopener noreferrer"
+              >useIntersectionObserver()</a
+            >
+            from
+            <a
+              href="https://usehooks-ts.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >usehooks-ts.com</a
+            >
+          </p>
+
+          <p>
+            I created <code>AnimationDemo</code> that uses a local version of
+            <code>react-intersection-observer</code>. The actual hook isn't that
+            difficult to grasp once you're looking at it in a single file (or
+            two). I also created <code>AnimationDemo2</code> that uses a
+            local/enhanced version of
+            <a
+              href="https://usehooks-ts.com/react-hook/use-intersection-observer"
+              target="_blank"
+              rel="noopener noreferrer"
+              >useIntersectionObserver()</a
+            >. It's enhancedments include
+
+            <code>skip</code>, <code>delay</code> (Edge/Chrome only - no
+            Safari/Firefox), and <code>onChange</code>, which make it more or
+            less like <code>react-intersection-observer</code>. That said, I'd
+            still go with <code>react-intersection-observer</code> (local or the
+            npm package) since it's a little more advanced.
+          </p>
+
+          <p>
+            In any case, Now we can do away with <code>useState</code>,
+            <code>useEffect</code>, and <code>useRef</code> and just do this:
+          </p>
+
+          <pre><code>
+  import { useInView } from 'react-intersection-observer'
+
+  // Custom imports
+  import { useTitle } from 'hooks'
+  import { HR, Title } from 'components'
+  
+
+  /* ========================================================================
+                                  PageHome
+  ======================================================================== */
+
+  const PageHome = () => {
+    useTitle('Home')
+    const { ref: article3Ref, inView: article3Intersecting /* , entry */ } = useInView({ threshold: 0 })
+
+    /* ======================
+            return
+    ====================== */
+
+    return (
+      &#60;div className='relative mx-auto w-full flex-1 p-6 2xl:container'&#62;...&#60;/div&#62;
+    )
+  }
+
+  export default PageHome
+          </code></pre>
+
+          <p>
+            But actually, <code>AnimationDemo</code> and
+            <code>AnimationDemo2</code> are much more sophisticated than this.
+          </p>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>
