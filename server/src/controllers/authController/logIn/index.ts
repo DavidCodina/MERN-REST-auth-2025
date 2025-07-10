@@ -56,7 +56,10 @@ export const logIn = async (
     // will automatically resolve the promise returned by findOne().
     // Dont' call .lean() because we will be using .save() on existingUser.
 
-    const existingUser = await User.findOne({ email }).exec()
+    // Explicitly select `password` and `role` since they're omitted from userModel by default.
+    const existingUser = await User.findOne({ email })
+      .select('+password +role')
+      .exec()
 
     if (!existingUser) {
       return res.status(400).json({

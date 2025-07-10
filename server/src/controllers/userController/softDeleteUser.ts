@@ -14,7 +14,12 @@ export const softDeleteUser = async (
   const userId = req?.user?._id
 
   try {
-    const user = await User.findById(userId, '-password -role').exec()
+    // Technically, there's no reason to omit `password`, `refreshTokenBlacklist`,
+    // or `role` if they're already omitted from the userModel by default, but it doesn't hurt.
+    const user = await User.findById(
+      userId,
+      '-password -refreshTokenBlacklist -role'
+    ).exec()
 
     /* ======================
           User Check

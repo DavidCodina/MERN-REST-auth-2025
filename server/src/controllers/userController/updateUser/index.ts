@@ -186,8 +186,11 @@ export const updateUser = async (
     //
     ///////////////////////////////////////////////////////////////////////////
 
+    // Technically, there's no reason to delete `password` or `refreshTokenBlacklist`
+    // since they're already omitted from the userModel by default, but it doesn't hurt.
     updatedUser = updatedUser.toObject()
     delete updatedUser.password
+    delete updatedUser.refreshTokenBlacklist
 
     return res.status(200).json({
       code: codes.UPDATED,

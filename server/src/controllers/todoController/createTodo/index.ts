@@ -86,7 +86,10 @@ export const createTodo = async (
 
     await newTodo.populate({
       path: 'user',
-      select: { password: 0, role: 0 }
+
+      // Note: The `password`, `role` and `refreshTokenBlacklist` are omitted by default from
+      // the userModel. Technically, we don't need to deselect them here. but, it doesn't hurt.
+      select: { password: 0, refreshTokenBlacklist: 0, role: 0 }
     })
 
     return res.status(201).json({

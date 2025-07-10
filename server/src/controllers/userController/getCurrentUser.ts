@@ -19,8 +19,15 @@ export const getCurrentUser = async (
     user && typeof user === 'object' ? { ...user } : null
 
   try {
+    // Technically, there's no reason to delete `password`
+    // or `refreshTokenBlacklist` if it's already omitted
+    // in the userModel by default, but it doesn't hurt.
     if (partialUser?.password) {
       delete partialUser.password
+    }
+
+    if (partialUser?.refreshTokenBlacklist) {
+      delete partialUser.refreshTokenBlacklist
     }
 
     return res.status(200).json({

@@ -50,8 +50,13 @@ export const getTodo = async (
     // The docs specifically say if you're querying by _id, use findById() instead.
     // const todo = await Todo.findOne({ _id: id }).lean().exec()
 
+    // Note: The `password`, `role` and `refreshTokenBlacklist` are omitted by default from
+    // the userModel. Technically, we don't need to deselect them here. but, it doesn't hurt.
     const todo = await Todo.findById(todoId)
-      .populate({ path: 'user', select: { password: 0, role: 0 } })
+      .populate({
+        path: 'user',
+        select: { password: 0, refreshTokenBlacklist: 0, role: 0 }
+      })
       .lean()
       .exec()
 

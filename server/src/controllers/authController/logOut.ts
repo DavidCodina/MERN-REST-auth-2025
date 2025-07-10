@@ -78,7 +78,10 @@ export const logOut = async (req: Request, res: Response<ResBody<null>>) => {
 
       if (isRefreshTokenData(decodedRefreshToken)) {
         const userId = decodedRefreshToken.id
-        const user = await User.findById(userId)
+
+        const user = await User.findById(userId).select(
+          '+refreshTokenBlacklist'
+        )
 
         if (user) {
           ///////////////////////////////////////////////////////////////////////////

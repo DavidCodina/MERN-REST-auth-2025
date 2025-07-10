@@ -27,11 +27,17 @@ const userSchema = new Schema<User>(
 
     password: {
       type: String,
-      required: true
+      required: true,
+      select: false
       // minlength: 5
     },
 
-    role: { type: String, enum: ['USER', 'ADMIN'], default: 'USER' },
+    role: {
+      type: String,
+      enum: ['USER', 'ADMIN'],
+      default: 'USER',
+      select: false
+    },
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -52,7 +58,8 @@ const userSchema = new Schema<User>(
           expiresAt: { type: Date, required: true }
         }
       ],
-      default: []
+      default: [],
+      select: false
     },
 
     isActive: { type: Boolean, required: true, default: true }

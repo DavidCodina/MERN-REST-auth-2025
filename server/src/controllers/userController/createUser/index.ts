@@ -167,6 +167,8 @@ export const createUser = async (
     const refreshToken = jwt.sign(
       {
         id: newUser._id,
+        // When creating a newUser, `role` will be present on newUser
+        // even when it's omitted from the userModel by default.
         role: newUser.role,
         jti: jti
         // exp and iat get added by jwt.sign()

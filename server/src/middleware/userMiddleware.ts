@@ -23,7 +23,10 @@ const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
         // Ignore this part for now.
         if (!err && decoded && typeof decoded === 'object' && 'id' in decoded) {
           const userId = decoded.id
-          const user = await User.findById(userId, '-password').lean().exec()
+
+          // The `password`,  `refreshTokenBlacklist` and `role` are omitted
+          // from the userModel by default. However, we do want role.
+          const user = await User.findById(userId, '+role').lean().exec()
           if (user) {
             req.user = user
           }

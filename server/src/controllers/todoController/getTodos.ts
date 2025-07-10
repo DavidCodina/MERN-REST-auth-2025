@@ -20,7 +20,13 @@ export const getTodos = async (
     const todos = await Todo.find({ user: userId })
       // For more info on populate() see here:
       // https://www.udemy.com/course/mongodb-4-complete-course/learn/lecture/24258128#overview
-      .populate({ path: 'user', select: { password: 0, role: 0 } })
+
+      // Note: The `password`, `role` and `refreshTokenBlacklist` are omitted by default from
+      // the userModel. Technically, we don't need to deselect them here. but, it doesn't hurt.
+      .populate({
+        path: 'user',
+        select: { password: 0, refreshTokenBlacklist: 0, role: 0 }
+      })
       .lean()
       .exec()
 

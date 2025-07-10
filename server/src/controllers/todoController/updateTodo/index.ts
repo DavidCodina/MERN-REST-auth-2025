@@ -50,7 +50,13 @@ export const updateTodo = async (
 
   try {
     const todo = await Todo.findById(todoId)
-      .populate({ path: 'user', select: { password: 0, role: 0 } })
+
+      // Note: The `password`, `role` and `refreshTokenBlacklist` are omitted by default from
+      // the userModel. Technically, we don't need to deselect them here. but, it doesn't hurt.
+      .populate({
+        path: 'user',
+        select: { password: 0, refreshTokenBlacklist: 0, role: 0 }
+      })
       // Omit .lean() because we'll call .save() later.
       .exec()
 

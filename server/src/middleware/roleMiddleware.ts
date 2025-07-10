@@ -20,15 +20,10 @@ const roleMiddleware = (allowedRole: Role) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const userRole = req.user?.role
 
-    let hasRole = false
-
     if (!userRole) {
-      // https://auth0.com/blog/forbidden-unauthorized-http-status-codes/
-      // 400 Bad Request is the status code to return when the form of the
-      // client request is not as the API expects.
-      return res.status(400).json({
+      return res.status(403).json({
         data: null,
-        message: 'Either no user or no role was found.',
+        message: 'Forbidden: Unable to determine user role.',
         success: false
       })
     }
@@ -40,7 +35,7 @@ const roleMiddleware = (allowedRole: Role) => {
       return res.status(403).json({
         data: null,
         message:
-          'The user lacks the requisite permission for this request (Forbidden).',
+          'Forbidden: The user lacks the requisite permission for this request.',
         success: false
       })
     }

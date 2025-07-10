@@ -29,7 +29,7 @@ export const refreshAccessToken = async (
   const cookies = req.cookies
 
   // This is expected when the user first mounts the client-side app and has not yet logged in.
-  // This would also be the case if the user had logged in, but the refreshToken cookie already expired.
+  // This would also be the case if the user had logged in, but the cookie already expired.
   if (!cookies.refreshToken) {
     return res.status(401).json({
       code: codes.BAD_REQUEST,
@@ -82,6 +82,9 @@ export const refreshAccessToken = async (
         const userId = decodedRefreshToken.id
 
         const user = await User.findById(userId)
+          // The userModel omits `refreshTokenBlacklist` by default, so explicitly select it.
+          .select('+refreshTokenBlacklist')
+          .exec()
 
         if (!user) {
           return res.status(401).json({
@@ -216,7 +219,7 @@ export const refreshAccessToken = async (
 
         // The accessToken cookie won't actually have been sent from the client
         // to the server if it already expired. However, for the sake of argument,
-        // if it was sent then this would effectively overwrite it. Why? Because
+        // if it was sent then this WOULD effectively overwrite it. Why? Because
         // HTTP cookies are uniquely identified by their name, domain and path.
         const accessTokenCookieOptions = getAccessTokenCookieOptions()
         res.cookie('accessToken', newAccessToken, accessTokenCookieOptions)
@@ -235,7 +238,6 @@ export const refreshAccessToken = async (
         // Direct comparison works fine here - no need to * or / by 1000.
         // entry.expiresAt.getTime() returns the time in milliseconds since the Unix epoch.
         // Date.now() also returns the current time in milliseconds since the Unix epoch.
-
         user.refreshTokenBlacklist = user.refreshTokenBlacklist.filter(
           (entry) => entry.expiresAt.getTime() > Date.now()
         )
