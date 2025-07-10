@@ -50,7 +50,36 @@ const userSchema = new Schema<User>(
     //   - Add an index on refreshTokenBlacklist.expiresAt for efficient cleanup.
     //   - If you want to support multiple device sessions, you could also store device info or session IDs.
     //
+    /////////////////////////
+    //
+    // The embedded approach works fine for small to medium user bases.
+    //
+    // We could move to refreshTokenBlacklist to a separate collection.
+    // However, this is only needed for 100K+ users with multiple
+    // concurrent sessions. One of the major benefits of creating a separate
+    // collection for refreshTokenBlacklist is that we can apply a TTL index
+    // to remove expired refreshTokens, rather than using a cron job.
+    //
+    // So, if you want to leverage TTL for your refresh token blacklist, you’d
+    // need to store each blacklist object as its own document in a separate
+    // collection (e.g., refreshTokenBlacklist), rather than as an array inside
+    // the User document.
+    //
+    //   // models/blacklistedTokenModel.ts
+    //   const blacklistedTokenSchema = new Schema({
+    //     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    //     jti: { type: String, required: true, unique: true },
+    //     expiresAt: { type: Date, required: true },
+    //     createdAt: { type: Date, default: Date.now }
+    //   }, { timestamps: true })
+    //
+    //   // Add indexes for performance
+    //   blacklistedTokenSchema.index({ userId: 1, expiresAt: 1 })
+    //   blacklistedTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 }) // TTL index
+    //   blacklistedTokenSchema.index({ jti: 1 }, { unique: true })
+    //
     ///////////////////////////////////////////////////////////////////////////
+
     refreshTokenBlacklist: {
       type: [
         {
