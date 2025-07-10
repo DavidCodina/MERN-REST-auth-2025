@@ -18,7 +18,7 @@ const LoginForm = ({
   className = '',
   ...otherProps
 }: LoginFormProps) => {
-  const { handleAuthSuccess } = useAuthContext()
+  const { setSession } = useAuthContext()
 
   const [email, setEmail] = React.useState('')
   const [emailTouched, setEmailTouched] = React.useState(false)
@@ -146,7 +146,7 @@ const LoginForm = ({
         const { success, data: session } = result
 
         if (success === true && session) {
-          handleAuthSuccess(session)
+          setSession(session)
 
           setEmail('')
           setEmailTouched(false)

@@ -65,10 +65,10 @@ export const customFetch: CustomFetch = async (
     // Solution: Create an authEvents utility that emits an 'AUTH_FAILURE' event.
     // Then have AuthContext listen for that event and handle it accordingly.
     //
-    //# Todo: Check specifically for the 401 http status code.
-    //
     ///////////////////////////////////////////////////////////////////////////
     else {
+      // '/api/auth/refresh-token' only responds with 401 or 200.
+      // Technically, this  will also run if there is no internet or the server is down.
       authEvents.emit('AUTH_FAILURE')
       // ⚠️ Note: if navigating to a protected page that then makes a protected API call,
       // you'll inevitably see the page for a brief flash prior to the API call failing and

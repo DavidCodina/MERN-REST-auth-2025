@@ -22,7 +22,7 @@ const RegisterForm = ({
         state & refs
   ====================== */
 
-  const { handleAuthSuccess } = useAuthContext()
+  const { setSession } = useAuthContext()
 
   const [userName, setUserName] = React.useState('')
   const [userNameTouched, setUserNameTouched] = React.useState(false)
@@ -280,7 +280,7 @@ const RegisterForm = ({
         const { success, data: session, errors, code } = result
 
         if (success === true && session) {
-          handleAuthSuccess(session)
+          setSession(session)
 
           setUserName('')
           setUserNameTouched(false)

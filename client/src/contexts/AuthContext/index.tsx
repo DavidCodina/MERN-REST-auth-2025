@@ -4,18 +4,16 @@ import { toast } from 'react-toastify'
 import { authEvents } from 'utils'
 import { getSession } from './getSession'
 import { logoutUser } from './logoutUser'
-
 import { Session } from 'types'
-
-type AuthSuccessHandler = (session: Session) => void
 
 type MaybeSession = Session | null
 
 export type AuthContextValue = {
   session: MaybeSession
+  setSession: React.Dispatch<React.SetStateAction<MaybeSession>>
   sessionLoading: boolean
   isAuthenticated: boolean
-  handleAuthSuccess: AuthSuccessHandler
+
   logOut: () => void
   isLoggingOut: boolean
 }
@@ -158,15 +156,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [])
 
   /* ======================
-      handleAuthSuccess()
-  ====================== */
-  //# This seems kind of weird. Why not just expose setSession to login and register?
-
-  const handleAuthSuccess: AuthSuccessHandler = (newSession) => {
-    setSession(newSession)
-  }
-
-  /* ======================
         useEffect()
   ====================== */
 
@@ -264,9 +253,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider
       value={{
         session,
+        setSession,
         sessionLoading,
         isAuthenticated,
-        handleAuthSuccess,
         logOut,
         isLoggingOut
       }}
